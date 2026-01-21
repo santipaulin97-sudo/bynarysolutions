@@ -3,138 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MGA Tech Consulting | Automatización y Datos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Paulin & Co. | Automatización & Data Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
     <div class="nav-container">
-        <div class="logo">
-            <img src="logo-mga.png" alt="MGA Tech Consulting" class="logo-img">
-        </div>
+        <div class="logo">P&C <span>Consulting</span></div>
         <ul class="nav-links">
-            <li><a href="#portfolio">Mi Portfolio</a></li>
-            <li><a href="#recursos">Recursos</a></li>
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#quien-soy">Quién Soy</a></li>
+            <li><a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a></li>
+            <li><a href="#casos" data-es="Casos de Éxito" data-en="Case Studies">Casos de Éxito</a></li>
+            <li><a href="#nosotros" data-es="Nosotros" data-en="About Us">Nosotros</a></li>
         </ul>
-        <div class="nav-actions">
+        <div class="nav-right">
+            <button id="lang-switch" class="lang-btn">EN</button>
             <a href="https://calendly.com/TU_USUARIO" class="cta-nav">Agendar Diagnóstico</a>
-            <div class="lang-switch">ES | EN</div>
-            <span class="dark-mode-icon">🌙</span>
         </div>
     </div>
 </nav>
 
 <header class="hero">
     <div class="container">
-        <h1>Automatice su Primer Proceso <span class="highlight">100% Gratis</span></h1>
-        <p class="hero-subtitle">Mejore la atención y descubra el potencial de la automatización sin compromiso. Le implementamos una solución real para que vea resultados en su negocio.</p>
+        <h1 data-es="Automatice su Empresa con un enfoque de" data-en="Automate your Business with a">
+            Automatice su Empresa con un enfoque de <span class="highlight">Data Engineering</span>
+        </h1>
+        <p class="hero-subtitle" data-es="Ayudamos a PyMEs y empresas en LATAM/USA a eliminar tareas manuales y tomar decisiones basadas en datos reales." data-en="We help SMEs and companies in LATAM/USA eliminate manual tasks and make decisions based on real data.">
+            Ayudamos a PyMEs y empresas en LATAM/USA a eliminar tareas manuales y tomar decisiones basadas en datos reales.
+        </p>
         
         <div class="hero-buttons">
-            <a href="#contacto" class="btn-primary">Solicitar Mi Automatización Gratis</a>
-            <a href="#casos" class="btn-secondary">¿Cómo Funciona? ↓</a>
+            <a href="#contacto" class="btn-primary" data-es="Solicitar Primera Automatización Gratis" data-en="Get Your First Automation Free">Solicitar Primera Automatización Gratis</a>
         </div>
 
         <div class="trust-badges">
-            <span>✓ Sin tarjeta de crédito</span>
-            <span>✓ Sin compromiso</span>
-            <span>✓ Resultados en 2 semanas</span>
-        </div>
-
-        <div class="offer-card">
-            <div class="offer-tag">🎁 OFERTA EXCLUSIVA PARA PYMES</div>
-            <h2>Su Primera Automatización: 100% Gratis</h2>
-            <p>Deje que le demostremos el valor de la automatización con un proyecto real en su empresa. Sin costo, sin letra chica.</p>
+            <span><i class="fas fa-check-circle"></i> Sin tarjeta</span>
+            <span><i class="fas fa-check-circle"></i> Resultados en 2 semanas</span>
+            <span><i class="fas fa-check-circle"></i> n8n + Python Expertos</span>
         </div>
     </div>
 </header>
 
-<section id="casos" class="cases-section">
+<section id="servicios" class="services-section">
     <div class="container">
-        <div class="section-header">
-            <p class="pre-title">Packs | Ejemplos | Nuestro Proceso</p>
-            <h2>Automatización en Acción: Casos Reales</h2>
-            <p>Vea cómo los flujos de trabajo resuelven problemas cotidianos de su negocio.</p>
-        </div>
-
-        <div class="cases-grid">
-            <div class="case-card">
-                <div class="case-img-placeholder">📊 </div>
-                <h3>Automatización de Ventas</h3>
-                <p>Recuperación automática de carritos abandonados y alertas de precios competitivos.</p>
-                <a href="#" class="case-link">Haz clic para conocer más →</a>
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-robot"></i>
+                <h3>Automatización con n8n</h3>
+                <p>Flujos de trabajo complejos que conectan sus herramientas (CRM, Sheets, Slack, APIs).</p>
             </div>
-            <div class="case-card">
-                <div class="case-img-placeholder">🤖 </div>
-                <h3>Automatización de RRHH</h3>
-                <p>Onboarding automático de empleados y procesamiento de reembolsos con IA.</p>
-                <a href="#" class="case-link">Haz clic para conocer más →</a>
+            <div class="service-card">
+                <i class="fas fa-database"></i>
+                <h3>Data Pipelines (ETL)</h3>
+                <p>Ingesta de datos masivos en BigQuery o Snowflake para reportes financieros precisos.</p>
             </div>
-            <div class="case-card">
-                <div class="case-img-placeholder">⚙️ </div>
-                <h3>Automatización Operativa</h3>
-                <p>Facturación automática inteligente y derivación de tickets por especialidad.</p>
-                <a href="#" class="case-link">Haz clic para conocer más →</a>
+            <div class="service-card">
+                <i class="fas fa-brain"></i>
+                <h3>AI & Agentes</h3>
+                <p>Implementación de LLMs (GPT-4) para análisis de sentimiento o clasificación de leads.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section id="quien-soy" class="experience-section">
+<section id="casos" class="cases-section">
     <div class="container">
-        <div class="profile-header">
-            <img src="foto-perfil.jpg" alt="Mariano Gobea Alcoba" class="profile-img">
-            <h2>Experiencia Real, Resultados Concretos</h2>
-            <div class="badge-ml">Líder Técnico de Datos & Analytics | 6+ años en MercadoLibre</div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-value">6+</div>
-                <div class="stat-label">Años de Experiencia</div>
+        <h2 class="section-title">Casos de Éxito</h2>
+        <div class="cases-grid">
+            <div class="case-card">
+                <div class="case-badge">Fintech</div>
+                <h3>Bot Dolar & Alertas de Volatilidad</h3>
+                <p>Sistema automático que monitorea tipos de cambio y dispara alertas críticas en tiempo real.</p>
+                <div class="tags"><span>Python</span><span>API</span><span>Automation</span></div>
             </div>
-            <div class="stat-item">
-                <div class="stat-value">$500K+</div>
-                <div class="stat-label">Procesados en ML</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">80%</div>
-                <div class="stat-label">Reducción Promedio</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">15+</div>
-                <div class="stat-label">Proyectos Exitosos</div>
+            <div class="case-card">
+                <div class="case-badge">Recruiting</div>
+                <h3>AI Resume Parser (n8n)</h3>
+                <p>Automatización completa de selección: parseo de CVs con IA y actualización de pipeline en Drive.</p>
+                <div class="tags"><span>n8n</span><span>GPT-4o</span><span>Cloud</span></div>
             </div>
         </div>
+    </div>
+</section>
 
-        <div class="bio">
-            <p>Soy Mariano Gobea Alcoba. Como experto en datos, aplico experiencia "enterprise" para resolver los desafíos del mundo real que enfrentan las pymes, con un enfoque pragmático y sin "humo".</p>
-        </div>
-
-        <div class="testimonials">
-            <div class="testimonial-card">
-                <p>"Ahorramos 18 horas semanales y $12,000 al año con su automatización de facturas."</p>
-                <strong>Laura González</strong> - Dueña, Consultora Contable
+<section id="nosotros" class="team-section">
+    <div class="container">
+        <h2 class="section-title">Experiencia que Respalda su Negocio</h2>
+        <div class="team-grid">
+            <div class="member-card">
+                <div class="member-info">
+                    <h3>Santiago Paulin</h3>
+                    <p class="role">Data Engineer Specialist</p>
+                    <p class="desc">Ex-Mercado Libre. Experto en pipelines de riesgo y flujos masivos de datos en la nube.</p>
+                    <div class="socials">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="testimonial-card">
-                <p>"El ROI fue del 400% en el primer año. Su experiencia en ML se nota."</p>
-                <strong>Roberto Martínez</strong> - CEO, Distribuidora
+            <div class="member-card">
+                <div class="member-info">
+                    <h3>[Nombre Compañero]</h3>
+                    <p class="role">Cloud Architect & Automation</p>
+                    <p class="desc">Especialista en infraestructura escalable y optimización de procesos operativos.</p>
+                    <div class="socials">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="final-cta">
-            <a href="#contacto" class="btn-primary">Solicitar Mi Automatización Gratis</a>
-            <p class="sub-text">Sin tarjeta de crédito • Sin compromisos • Resultados en 1-2 semanas</p>
         </div>
     </div>
 </section>
 
 <footer>
-    <p>© 2026 MGA Tech Consulting. Expertos en Automatización y Data Engineering.</p>
+    <p>© 2026 Paulin & Co. Consulting. Automatización para el mundo real.</p>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
