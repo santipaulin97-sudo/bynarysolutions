@@ -1,18 +1,12 @@
-/* 1. SCROLLBAR PRO - Estilo Dark Tech */
-::-webkit-scrollbar {
-    width: 10px;
+/* 1. SCROLLBAR PRO */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #080c14; }
+::-webkit-scrollbar-thumb { 
+    background: linear-gradient(#0066FF, #00E0FF); 
+    border-radius: 10px; 
+    border: 2px solid #080c14; 
 }
-::-webkit-scrollbar-track {
-    background: #080c14;
-}
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(#0066FF, #00E0FF);
-    border-radius: 10px;
-    border: 2px solid #080c14;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #00E0FF;
-}
+::-webkit-scrollbar-thumb:hover { background: #00E0FF; }
 
 :root {
     --bg-main: #080c14;
@@ -26,7 +20,7 @@
     --border: rgba(255, 255, 255, 0.08);
 }
 
-/* 2. BASE & EFECTO DE ILUMINACIÓN (GLOW) */
+/* 2. BASE & ILUMINACIÓN GLOW */
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 body { 
     background: 
@@ -39,7 +33,7 @@ body {
 }
 .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-/* 3. NAVEGACIÓN - Logo horizontal y espaciado pro */
+/* 3. NAVEGACIÓN - Logo horizontal y ancho ideal */
 nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
 .nav-container { 
     display: flex; 
@@ -49,83 +43,41 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     margin: 0 auto; 
     padding: 0 30px; 
 }
-.logo { 
-    font-size: 1.7rem; 
-    font-weight: 800; 
-    flex-shrink: 0; 
-    white-space: nowrap; 
-    letter-spacing: -0.5px;
-}
+.logo { font-size: 1.7rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.5px; }
 .logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
 .nav-links { display: flex; list-style: none; gap: 35px; }
-.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; font-weight: 500; }
+.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; }
 .nav-links a:hover { color: var(--text-white); }
-
-.nav-right { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
 .lang-btn { background: none; border: 1px solid var(--border); color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
 .cta-nav { 
-    background: var(--accent-gradient); 
-    color: white; 
-    padding: 12px 26px; 
-    border-radius: 50px; 
-    text-decoration: none; 
-    font-weight: 700; 
-    font-size: 0.85rem; 
-    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-    white-space: nowrap;
-    transition: transform 0.2s ease;
+    background: var(--accent-gradient); color: white; padding: 12px 26px; border-radius: 50px; 
+    text-decoration: none; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+    white-space: nowrap; transition: 0.2s ease;
 }
 .cta-nav:hover { transform: translateY(-2px); }
 
-/* 4. ANIMACIONES DE REVELACIÓN (Scroll Reveal) */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* 4. REVELACIÓN AL HACER SCROLL */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.reveal.active { opacity: 1; transform: translateY(0); }
 
 /* 5. TÍTULOS PEGADOS A LOS CUADROS */
-.section-title { 
-    text-align: center; 
-    font-size: 2.3rem; 
-    margin-bottom: 10px !important; 
-    font-weight: 800; 
-}
-.solutions-grid, .action-grid, .pricing-grid, .team-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 30px; 
-    margin-top: 5px !important; 
-}
+.section-title { text-align: center; font-size: 2.3rem; margin-bottom: 10px !important; font-weight: 800; }
+.solutions-grid, .action-grid, .pricing-grid, .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 5px !important; }
 
-/* 6. CARDS PREMIUM - Efecto elástico y elevación */
+/* 6. CARDS PREMIUM - Efecto elástico y hover */
 .sol-card, .action-card, .price-card, .member-card {
     background: linear-gradient(145deg, var(--bg-card), var(--bg-main));
-    padding: 45px; 
-    border-radius: 28px; 
-    border: 1px solid var(--border); 
+    padding: 45px; border-radius: 28px; border: 1px solid var(--border); 
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .sol-card:hover, .action-card:hover, .price-card:hover, .member-card:hover {
-    transform: translateY(-10px); 
-    border-color: var(--accent-secondary) !important; 
-    box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15); 
-    background: linear-gradient(145deg, #161e2e, #080c14); 
+    transform: translateY(-10px); border-color: var(--accent-secondary) !important; 
+    box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15); background: linear-gradient(145deg, #161e2e, #080c14);
 }
-
-/* ICONOS CON DEGRADADO */
 .sol-card i, .price-card i, .step i {
-    font-size: 2.8rem; 
-    margin-bottom: 25px; 
-    display: block; 
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 2.8rem; margin-bottom: 25px; display: block; 
+    background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 5px 10px rgba(0, 102, 255, 0.2));
 }
 
@@ -139,30 +91,19 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
 }
 .btn-primary { 
-    background: var(--accent-gradient); 
-    color: white; 
-    padding: 20px 45px; 
-    border-radius: 50px; 
-    text-decoration: none; 
-    font-weight: 700; 
-    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3); 
-    display: inline-block; 
-    animation: pulse-glow 2s infinite; 
+    background: var(--accent-gradient); color: white; padding: 20px 45px; border-radius: 50px; 
+    text-decoration: none; font-weight: 700; display: inline-block; animation: pulse-glow 2s infinite; 
 }
 
-/* 8. STATS - Brillo en números */
+/* 8. STATS - Brillo números */
 .stats-bar { padding: 60px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.stat-value { 
-    font-size: 3rem; 
-    font-weight: 800; 
-    color: var(--accent-secondary); 
-    text-shadow: 0 0 20px rgba(0, 224, 255, 0.3);
-}
+.stat-value { font-size: 3rem; font-weight: 800; color: var(--accent-secondary); text-shadow: 0 0 20px rgba(0, 224, 255, 0.3); }
 
-/* 9. DETALLES DE SECCIONES */
+/* 9. OTROS DETALLES */
 .free-card { border: 2px solid var(--accent-secondary); text-align: center; padding: 60px; border-radius: 35px; background: rgba(0, 224, 255, 0.02); }
-.img-wrap { background: #000; height: 180px; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+.img-wrap { background: #000; height: 180px; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--border); }
 .img-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.5s; }
+.action-card:hover img { opacity: 1; transform: scale(1.05); }
 
 .price-card.featured { border: 2px solid var(--accent-green) !important; transform: scale(1.03); }
 .team-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent-primary); object-fit: cover; }
