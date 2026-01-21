@@ -1,18 +1,22 @@
 const langBtn = document.getElementById('lang-switch');
 let currentLang = 'es';
 
-// Función de Traducción
+// 1. TRADUCCIÓN INTELIGENTE
 langBtn.addEventListener('click', () => {
     currentLang = currentLang === 'es' ? 'en' : 'es';
     langBtn.innerText = currentLang === 'es' ? 'EN' : 'ES';
+
     document.querySelectorAll('[data-es]').forEach(el => {
         const text = el.getAttribute(`data-${currentLang}`);
-        if (text) { el.innerHTML = text; }
+        if (text) {
+            // USAR innerHTML para que procese negritas y listas correctamente
+            el.innerHTML = text; 
+        }
     });
 });
 
-// NUEVO: Lógica de Scroll Reveal
-const revealElements = () => {
+// 2. SCROLL REVEAL (Animación de entrada)
+const revealOnScroll = () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -24,14 +28,15 @@ const revealElements = () => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 };
 
-// Ejecutar al cargar
-window.addEventListener('DOMContentLoaded', revealElements);
+window.addEventListener('DOMContentLoaded', revealOnScroll);
 
-// Smooth scroll
+// 3. SMOOTH SCROLL (Navegación fluida)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
     });
 });
