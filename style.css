@@ -1,3 +1,18 @@
+/* Scrollbar Pro */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--accent-primary), var(--accent-secondary));
+    border-radius: 10px;
+    border: 2px solid var(--bg-main);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
 :root {
     --bg-main: #080c14;
     --bg-card: #111826;
@@ -165,4 +180,26 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     .stats-grid-mini, .offer-content, .pricing-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.8rem; }
     .nav-container { padding: 0 20px; }
+}
+/* Clase para elementos que se van a revelar */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Clase que activa la animación (se pone con JS) */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 102, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
+}
+
+.btn-primary {
+    animation: pulse-glow 2s infinite; /* El botón principal ahora "late" suavemente */
 }
