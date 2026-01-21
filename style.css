@@ -142,3 +142,29 @@ h3 {
   font-size: 1.1rem;
   color: #c7d2fe;
 }
+
+/* GRID LAYOUTS */
+#services,
+#cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+/* CARD HOVER (enterprise feel) */
+#services div,
+#cases div {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#services div:hover,
+#cases div:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* SECTION SEPARATION */
+section:not(#hero) {
+  border-top: 1px solid #1e293b;
+}
+
