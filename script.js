@@ -1,197 +1,50 @@
-/* 1. SCROLLBAR PRO */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #080c14; }
-::-webkit-scrollbar-thumb { background: linear-gradient(#0066FF, #00E0FF); border-radius: 10px; border: 2px solid #080c14; }
+// 1. SELECTOR DE IDIOMAS (Lógica de Pastilla)
+const langToggle = document.getElementById('lang-switch');
+const langOptions = document.querySelectorAll('.lang-opt');
+let currentLang = 'es';
 
-:root {
-    --bg-main: #080c14;
-    --bg-card: #111826;
-    --accent-primary: #0066FF;
-    --accent-secondary: #00E0FF;
-    --accent-green: #00ff88;
-    --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    --text-white: #ffffff;
-    --text-muted: #9ca3af;
-    --border: rgba(255, 255, 255, 0.08);
-}
+langToggle.addEventListener('click', (e) => {
+    const target = e.target.closest('.lang-opt');
+    if (!target || target.classList.contains('active')) return;
 
-/* 2. BASE & ILUMINACIÓN GLOW */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body { 
-    background: 
-        radial-gradient(circle at 10% 20%, rgba(0, 102, 255, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(0, 224, 255, 0.05) 0%, transparent 40%),
-        var(--bg-main); 
-    color: var(--text-white); 
-    line-height: 1.6; 
-    overflow-x: hidden; 
-}
-.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    // Actualización Visual
+    langOptions.forEach(opt => opt.classList.remove('active'));
+    target.classList.add('active');
 
-/* 3. NAVEGACIÓN PREMIUM */
-nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-.nav-container { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    max-width: 1250px; 
-    margin: 0 auto; 
-    padding: 0 30px; 
-}
-.logo { font-size: 1.7rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.5px; flex-shrink: 0; }
-.logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.nav-links { display: flex; list-style: none; gap: 35px; }
-.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; font-weight: 500; }
-.nav-links a:hover { color: var(--text-white); }
+    // Actualización de Idioma
+    currentLang = target.getAttribute('data-value');
 
-/* SELECTOR DE IDIOMAS PASTILLA (SIN LUNA) */
-.nav-right { display: flex; align-items: center; gap: 25px; flex-shrink: 0; }
-.lang-switch-container {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 50px;
-    padding: 4px;
-    border: 1px solid var(--border);
-    gap: 2px;
-    cursor: pointer;
-}
-.lang-opt {
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--text-muted);
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.lang-opt.active {
-    background: var(--accent-primary);
-    color: white;
-    box-shadow: 0 0 15px rgba(0, 102, 255, 0.5);
-}
-.cta-nav { 
-    background: var(--accent-gradient); color: white; padding: 12px 26px; border-radius: 50px; 
-    text-decoration: none; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-    white-space: nowrap; transition: 0.2s ease;
-}
-.cta-nav:hover { transform: translateY(-2px); }
+    // Traducción de elementos con innerHTML para procesar tags
+    document.querySelectorAll('[data-es]').forEach(el => {
+        const text = el.getAttribute(`data-${currentLang}`);
+        if (text) {
+            el.innerHTML = text; 
+        }
+    });
+});
 
-/* 4. REVELACIÓN & ANIMACIONES */
-.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.reveal.active { opacity: 1; transform: translateY(0); }
+// 2. REVELACIÓN AL HACER SCROLL (Animaciones)
+const revealOnScroll = () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
 
-/* 5. TÍTULOS & GRIDS */
-.section-title { text-align: center; font-size: 2.3rem; margin-bottom: 10px !important; font-weight: 800; }
-.solutions-grid, .action-grid, .pricing-grid, .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 5px !important; }
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+};
 
-/* 6. CARDS PREMIUM */
-.sol-card, .action-card, .price-card, .member-card {
-    background: linear-gradient(145deg, var(--bg-card), var(--bg-main));
-    padding: 45px; border-radius: 28px; border: 1px solid var(--border); 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.sol-card:hover, .action-card:hover, .price-card:hover, .member-card:hover {
-    transform: translateY(-10px); border-color: var(--accent-secondary) !important; 
-    box-shadow: 0 15px 40px rgba(0, 224, 255, 0.15);
-}
-.sol-card i, .price-card i, .step i, .offer-step-item i {
-    font-size: 2.8rem; margin-bottom: 25px; display: block; 
-    background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 5px 10px rgba(0, 102, 255, 0.2));
-}
+window.addEventListener('DOMContentLoaded', revealOnScroll);
 
-/* 7. HERO & BOTÓN MAGNÉTICO */
-.hero { text-align: center; padding: 130px 0 80px; }
-.hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; letter-spacing: -1.5px; }
-@keyframes pulse-glow {
-    0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4); }
-    70% { box-shadow: 0 0 0 15px rgba(0, 102, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
-}
-.btn-primary { 
-    background: var(--accent-gradient); color: white; padding: 20px 45px; border-radius: 50px; 
-    text-decoration: none; font-weight: 700; display: inline-block; animation: pulse-glow 2s infinite; 
-}
-.stats-bar { padding: 60px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.stats-grid-mini { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; }
-.stat-value { font-size: 3rem; font-weight: 800; color: var(--accent-secondary); text-shadow: 0 0 20px rgba(0, 224, 255, 0.3); }
-
-/* 8. OFERTA REDISEÑADA (HORIZONTAL) */
-.free-offer-section { padding: 80px 0; }
-.free-card {
-    border: 2px solid var(--accent-secondary);
-    text-align: center;
-    padding: 50px 40px;
-    border-radius: 35px;
-    background: rgba(0, 224, 255, 0.02);
-    max-width: 1000px; /* Más alargado y chico */
-    margin: 0 auto;
-}
-.offer-header { margin-bottom: 40px; }
-.offer-tag { background: var(--accent-green); color: #000; padding: 6px 16px; border-radius: 50px; font-weight: 800; font-size: 0.75rem; margin-bottom: 20px; display: inline-block; }
-.offer-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; }
-.offer-subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
-
-/* Grid de 3 pasos horizontal */
-.offer-steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 50px;
-    text-align: center;
-}
-.offer-step-item i { font-size: 2.5rem; margin-bottom: 20px; display: block; }
-.offer-step-item h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
-.offer-step-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
-
-/* Contenedor de ejemplos oscuro */
-.offer-examples-container {
-    background: rgba(255, 255, 255, 0.04);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: left;
-    margin-bottom: 40px;
-}
-.offer-examples-container h4 { color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 20px; font-weight: 700; }
-.examples-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas */
-    gap: 15px 30px;
-}
-.examples-list li {
-    position: relative;
-    padding-left: 25px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-.examples-list li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--accent-green);
-    font-weight: 800;
-}
-
-.btn-primary-alt { background: var(--accent-secondary); color: #000; padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; display: inline-block; transition: 0.3s; font-size: 1rem; }
-.btn-primary-alt:hover { transform: scale(1.02); box-shadow: 0 0 25px rgba(0, 224, 255, 0.4); }
-.offer-disclaimer { color: var(--text-muted); font-size: 0.8rem; margin-top: 15px; }
-
-/* 9. PACKS & TEAM */
-.img-wrap { background: #000; height: 180px; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--border); }
-.img-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.5s; }
-.price-card.featured { border: 2px solid var(--accent-green) !important; transform: scale(1.03); }
-.socials { margin-top: 20px; display: flex; gap: 20px; justify-content: center; }
-.socials a { color: var(--text-white); font-size: 1.5rem; transition: 0.3s; opacity: 0.7; }
-.socials a:hover { color: var(--accent-secondary); opacity: 1; transform: translateY(-3px); }
-.team-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent-primary); object-fit: cover; }
-
-/* 10. FOOTER */
-.main-footer { padding: 80px 0 40px; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); }
-
-@media (max-width: 900px) {
-    .nav-links { display: none; }
-    .stats-grid-mini, .offer-steps-grid, .examples-list, .pricing-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 2.8rem; }
-    .nav-container, .free-card { padding: 20px; }
-}
+// 3. SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
