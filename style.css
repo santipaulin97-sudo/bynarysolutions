@@ -140,17 +140,62 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 .stat-value { font-size: 3.5rem; font-weight: 800; color: var(--accent-secondary); text-shadow: 0 0 20px rgba(0, 224, 255, 0.4); }
 
 /* 12. P&G BOT */
-.chatbot-container { position: fixed; bottom: 35px; right: 35px; z-index: 10000; }
+/* =========================================
+   12. P&G BOT - DISEÑO ENTERPRISE COMPLETO
+   ========================================= */
+.chatbot-container { position: fixed; bottom: 35px; right: 35px; z-index: 10000; font-family: 'Inter', sans-serif; }
+
+.chat-trigger-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
+
 .chat-trigger { 
     width: 75px; height: 75px; border-radius: 50%; background: var(--accent-gradient); color: white; border: none; font-size: 2.2rem; 
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4); cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4), 0 0 15px rgba(0, 224, 255, 0.3);
+    transition: var(--transition-premium);
 }
+
+.trigger-label { color: var(--text-white); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; }
+
+.chat-trigger-wrapper:hover .chat-trigger { transform: scale(1.1) rotate(10deg); }
+
 .chat-window { 
     position: absolute; bottom: 105px; right: 0; width: 370px; height: 550px; 
     background: rgba(17, 24, 38, 0.98); backdrop-filter: blur(20px); 
-    border: 1px solid var(--border); border-radius: 28px; display: none; flex-direction: column; overflow: hidden;
+    border: 1px solid var(--border); border-radius: 28px; display: none; flex-direction: column; 
+    overflow: hidden; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8); 
+    animation: chatSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+@keyframes chatSlideIn { from { opacity: 0; transform: translateY(30px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.chat-header { background: var(--accent-gradient); padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+.chat-logo-title { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.1rem; }
+.bot-avatar-mini { background: rgba(255,255,255,0.2); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+
+.chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+
+/* Mensajes Estilo Burbuja */
+.message { max-width: 85%; padding: 12px 18px; border-radius: 20px; font-size: 0.95rem; line-height: 1.4; animation: msgFade 0.3s ease; }
+@keyframes msgFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.message.bot { background: rgba(255, 255, 255, 0.06); color: var(--text-white); align-self: flex-start; border-bottom-left-radius: 5px; border: 1px solid var(--border); }
+.message.user { background: var(--accent-primary); color: white; align-self: flex-end; border-bottom-right-radius: 5px; box-shadow: 0 4px 15px rgba(0, 102, 255, 0.2); }
+
+/* Indicador de "Escribiendo..." */
+.typing-indicator { padding: 10px 20px; display: none; gap: 5px; align-items: center; }
+.typing-indicator span { width: 6px; height: 6px; background: var(--accent-secondary); border-radius: 50%; animation: dotBounce 1.4s infinite ease-in-out; }
+@keyframes dotBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+/* Botones de Opciones */
+.chat-options { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
+.chat-opt-btn { background: rgba(0, 224, 255, 0.05); border: 1px solid rgba(0, 224, 255, 0.2); color: var(--accent-secondary); padding: 12px 15px; border-radius: 15px; text-align: left; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.chat-opt-btn:hover { background: rgba(0, 224, 255, 0.15); border-color: var(--accent-secondary); transform: translateX(8px); }
+
+/* Footer del Chat */
+.chat-footer { padding: 15px; display: flex; gap: 10px; background: rgba(0, 0, 0, 0.3); border-top: 1px solid var(--border); }
+.chat-footer input { flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 15px; padding: 12px; color: white; outline: none; }
+.chat-footer button { background: var(--accent-primary); border: none; border-radius: 12px; width: 45px; color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+.chat-footer button:hover { background: var(--accent-secondary); color: var(--bg-main); }
 
 /* =========================================
    NUEVA SECCIÓN DE OFERTA GRATUITA (MODERNO)
