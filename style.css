@@ -187,3 +187,7 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     .team-grid .member-card { width: 100%; }
     .chat-window { width: calc(100vw - 40px); bottom: 100px; }
 }
+/* SOCIAL ICONS - TEAM */
+.socials a i {
+    color: #ffffff;
+}
