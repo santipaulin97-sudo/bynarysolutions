@@ -35,20 +35,44 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1250px; margin: 0 auto; padding: 0 30px; }
 .logo { font-size: 1.7rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.5px; }
 .logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
 .nav-links { display: flex; list-style: none; gap: 35px; }
 .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; font-weight: 500; }
 .nav-links a:hover { color: var(--text-white); }
+
+/* --- CORRECCIÓN AQUÍ: Alineación de Idioma + Botón --- */
+.nav-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+}
+
 .lang-switch-container { display: flex; background: rgba(255, 255, 255, 0.05); border-radius: 50px; padding: 4px; border: 1px solid var(--border); gap: 2px; cursor: pointer; }
 .lang-opt { padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; color: var(--text-muted); transition: 0.3s; }
 .lang-opt.active { background: var(--accent-primary); color: white; box-shadow: 0 0 15px rgba(0, 102, 255, 0.5); }
-.cta-nav { background: var(--accent-gradient); color: white; padding: 12px 26px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3); white-space: nowrap; transition: 0.2s; }
+
+.cta-nav { 
+    background: var(--accent-gradient); 
+    color: white; 
+    padding: 12px 26px; 
+    border-radius: 50px; 
+    text-decoration: none; 
+    font-weight: 700; 
+    font-size: 0.85rem; 
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3); 
+    white-space: nowrap; 
+    transition: 0.2s; 
+    display: inline-flex;
+    align-items: center;
+}
+.cta-nav:hover { transform: scale(1.05); }
 
 /* 4. TÍTULOS Y REVELACIÓN */
 .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 30px; font-weight: 800; }
 .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* 5. GRIDS GENERALES (Desktop 3 Columnas) */
+/* 5. GRIDS GENERALES */
 .solutions-grid, .pricing-grid, .action-grid { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -69,42 +93,29 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     box-shadow: 0 20px 40px rgba(0, 224, 255, 0.15);
 }
 
-/* Iconos de las tarjetas */
+/* Iconos */
 .sol-card i, .price-card i, .offer-step-item i {
     font-size: 3.5rem; margin-bottom: 25px; display: block;
     background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 5px 10px rgba(0, 102, 255, 0.2));
 }
 
-/* 7. AJUSTE EQUIPO (CENTRADO PARA 2 PERSONAS) */
+/* 7. EQUIPO */
 .team-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 35px; margin-top: 15px; }
 .team-grid .member-card { width: 480px; }
+.team-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--accent-primary); object-fit: cover; align-self: center; margin-bottom: 20px; }
 
-/* 8. PACK RECOMENDADO EN VERDE */
-.price-card.featured { 
-    border: 2px solid var(--accent-green) !important; 
-    transform: scale(1.03); 
-}
+/* 8. PRECIOS */
+.price-card.featured { border: 2px solid var(--accent-green) !important; transform: scale(1.03); }
 .rec-tag {
     background: var(--accent-green); color: #000; padding: 6px 20px;
     border-radius: 50px; font-weight: 800; font-size: 0.75rem;
     position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
     box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
 }
+.price-tag { font-size: 1.5rem; font-weight: 800; margin: 20px 0; color: var(--text-white); }
 
-/* Estilo de botones "Pastilla" Blancos para Saber Más */
-.price-card a, .sol-card a[href*="saber"] {
-    display: inline-block; margin-top: auto; padding: 12px 25px;
-    background: rgba(255, 255, 255, 0.05); color: var(--text-white) !important;
-    text-decoration: none; border-radius: 50px; font-weight: 700;
-    border: 1px solid var(--border); transition: 0.3s; text-align: center; width: fit-content;
-}
-.price-card a:hover, .sol-card a[href*="saber"]:hover {
-    background: var(--accent-primary); border-color: transparent;
-    box-shadow: 0 5px 15px rgba(0, 102, 255, 0.3);
-}
-
-/* 9. CASOS EN ACCIÓN - IMÁGENES TÉCNICAS */
+/* 9. CASOS */
 .img-wrap { 
     height: 190px; border-radius: 16px; overflow: hidden; margin-bottom: 25px; 
     background: #000; border: 1px solid var(--border);
@@ -112,82 +123,40 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 }
 .img-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 12px; opacity: 0.85; transition: 0.5s; }
 
-/* 10. HERO & BADGES */
+/* 10. HERO */
 .hero { text-align: center; padding: 140px 0 80px; }
 .hero h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; letter-spacing: -1.8px; }
+.highlight { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-subtitle { color: var(--text-muted); max-width: 800px; margin: 0 auto 40px; font-size: 1.2rem; }
 .btn-primary { background: var(--accent-gradient); color: white; padding: 22px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; transition: 0.3s; }
-.btn-primary:hover { transform: scale(1.05); }
 .trust-badges { margin-top: 60px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-.trust-badges span { display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); padding: 14px 28px; border-radius: 50px; font-size: 0.95rem; font-weight: 600; color: var(--text-white); transition: var(--transition-premium); }
-.trust-badges span:hover { background: rgba(0, 224, 255, 0.08); border-color: var(--accent-secondary); transform: translateY(-5px); }
+.trust-badges span { display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); padding: 14px 28px; border-radius: 50px; font-size: 0.95rem; font-weight: 600; }
 
-/* 11. STATS & FOOTER */
+/* 11. STATS */
 .stats-bar { padding: 70px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 30px 0; }
 .stats-grid-mini { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; }
 .stat-value { font-size: 3.5rem; font-weight: 800; color: var(--accent-secondary); text-shadow: 0 0 20px rgba(0, 224, 255, 0.4); }
-.team-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--accent-primary); object-fit: cover; }
-.main-footer { padding: 80px 0 50px; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); }
 
-/* =========================================
-   12. P&G BOT - DISEÑO ENTERPRISE COMPLETO
-   ========================================= */
-.chatbot-container { position: fixed; bottom: 35px; right: 35px; z-index: 10000; font-family: 'Inter', sans-serif; }
-.chat-trigger-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
-
+/* 12. P&G BOT */
+.chatbot-container { position: fixed; bottom: 35px; right: 35px; z-index: 10000; }
 .chat-trigger { 
     width: 75px; height: 75px; border-radius: 50%; background: var(--accent-gradient); color: white; border: none; font-size: 2.2rem; 
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4), 0 0 15px rgba(0, 224, 255, 0.3);
-    transition: var(--transition-premium);
+    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4); cursor: pointer;
 }
-
-.trigger-label { color: var(--text-white); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); opacity: 0.9; }
-
-.chat-trigger-wrapper:hover .chat-trigger { transform: scale(1.1) rotate(10deg); box-shadow: 0 15px 40px rgba(0, 102, 255, 0.6), 0 0 25px rgba(0, 224, 255, 0.5); }
-
 .chat-window { 
     position: absolute; bottom: 105px; right: 0; width: 370px; height: 550px; 
     background: rgba(17, 24, 38, 0.98); backdrop-filter: blur(20px); 
-    border: 1px solid var(--border); border-radius: 28px; display: none; flex-direction: column; 
-    overflow: hidden; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8); 
-    animation: chatSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--border); border-radius: 28px; display: none; flex-direction: column; overflow: hidden;
 }
-
-@keyframes chatSlideIn { from { opacity: 0; transform: translateY(30px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-.chat-header { background: var(--accent-gradient); padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
-.chat-logo-title { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.1rem; }
-.bot-avatar-mini { background: rgba(255,255,255,0.2); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
-
-.chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-
-.typing-indicator { padding: 15px 20px; display: none; gap: 5px; }
-.typing-indicator span { width: 7px; height: 7px; background: var(--accent-secondary); border-radius: 50%; animation: dotBounce 1.4s infinite ease-in-out; }
-@keyframes dotBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-
-.message { max-width: 85%; padding: 12px 18px; border-radius: 20px; font-size: 0.95rem; line-height: 1.4; animation: msgFade 0.3s ease; }
-@keyframes msgFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.message.bot { background: rgba(255, 255, 255, 0.06); color: var(--text-white); align-self: flex-start; border-bottom-left-radius: 5px; }
-.message.user { background: var(--accent-primary); color: white; align-self: flex-end; border-bottom-right-radius: 5px; box-shadow: 0 4px 15px rgba(0, 102, 255, 0.2); }
-
-.chat-options { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
-.chat-opt-btn { background: rgba(0, 224, 255, 0.05); border: 1px solid rgba(0, 224, 255, 0.2); color: var(--accent-secondary); padding: 12px 15px; border-radius: 15px; text-align: left; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
-.chat-opt-btn:hover { background: rgba(0, 224, 255, 0.15); border-color: var(--accent-secondary); transform: translateX(8px); }
-
-.chat-footer { padding: 15px; display: flex; gap: 10px; background: rgba(0, 0, 0, 0.3); }
-.chat-footer input { flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 15px; padding: 12px; color: white; outline: none; }
-.chat-footer button { background: var(--accent-primary); border: none; border-radius: 12px; width: 45px; color: white; cursor: pointer; transition: 0.3s; }
 
 /* 13. RESPONSIVE */
 @media (max-width: 900px) {
     .nav-links { display: none; }
     .hero h1 { font-size: 3rem; }
-    .stats-grid-mini, .offer-steps-grid, .examples-list, .pricing-grid, .action-grid, .solutions-grid { grid-template-columns: 1fr; }
-    .team-grid .member-card { width: 100%; }
-    .chat-window { width: calc(100vw - 40px); bottom: 100px; }
+    .stats-grid-mini, .solutions-grid, .pricing-grid, .action-grid { grid-template-columns: 1fr; }
+    .nav-container { padding: 0 15px; }
 }
-/* SOCIAL ICONS - TEAM */
-.socials a i {
-    color: #ffffff;
-}
+
+.socials a i { color: #ffffff; margin: 0 10px; font-size: 1.2rem; transition: 0.3s; }
+.socials a i:hover { color: var(--accent-secondary); }
