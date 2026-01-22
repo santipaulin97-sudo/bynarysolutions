@@ -154,7 +154,7 @@ function showChatMenu() {
     menuDiv.innerHTML = `
         <button class="chat-opt-btn" data-action="price">${currentLang === 'es' ? '💰 Planes' : '💰 Plans'}</button>
         <button class="chat-opt-btn" data-action="time">${currentLang === 'es' ? '⏱️ Tiempos' : '⏱️ Times'}</button>
-        <button class="chat-opt-btn" data-action="human">${currentLang === 'es' ? '👤 Agendar' : '👤 Book Call'}</button>
+        <button class="chat-opt-btn" data-action="human">${currentLang === 'es' ? '👤 Agendar reunion' : '👤 Book Call'}</button>
     `;
     chatBody.appendChild(menuDiv);
     chatBody.scrollTop = chatBody.scrollHeight;
