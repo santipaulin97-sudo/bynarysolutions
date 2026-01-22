@@ -121,7 +121,7 @@ const intents = {
 sendBtn.addEventListener('click', () => {
     const rawText = chatInput.value;
 
-const normalizedText = rawText
+    const normalizedText = rawText
     .trim()
     .toLowerCase()
     .normalize("NFD")
@@ -137,8 +137,8 @@ const normalizedText = rawText
         typingIndicator.style.display = 'none';
 
         const detectedIntent = Object.entries(intents)
-    .find(([_, keywords]) => keywords.some(k => normalizedText.includes(k)))
-    ?.[0];
+            .find(([_, keywords]) => keywords.some(k => normalizedText.includes(k)))
+            ?. [0];
 
         if (detectedIntent) {
             botReply(detectedIntent);
