@@ -78,6 +78,31 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 .btn-primary { background: var(--accent-gradient); color: white; padding: 22px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; transition: 0.3s; }
 .btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 30px rgba(0, 102, 255, 0.4); }
 
+/* ESTILO PARA EL TYPING EFFECT */
+#typing-container {
+    margin: 10px 0 15px 0;
+    min-height: 25px; /* Mantiene el espacio fijo */
+}
+
+#typing-text {
+    color: var(--accent-secondary); /* Cyan brillante */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.cursor {
+    color: var(--accent-secondary);
+    animation: blink 0.7s infinite;
+    font-weight: 300;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 /* --- PASTILLAS NUEVAS --- */
 .trust-badges { margin-top: 60px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 .trust-badges span {
@@ -301,27 +326,4 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     display: flex;
     justify-content: center;
 }
-/* ESTILO PARA EL TYPING EFFECT */
-#typing-container {
-    margin: 10px 0 15px 0;
-    min-height: 25px; /* Mantiene el espacio fijo */
-}
 
-#typing-text {
-    color: var(--accent-secondary); /* Cyan brillante */
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-}
-
-.cursor {
-    color: var(--accent-secondary);
-    animation: blink 0.7s infinite;
-    font-weight: 300;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
