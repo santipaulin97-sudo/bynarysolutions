@@ -107,45 +107,27 @@ const chatBody = document.getElementById('chat-body');
 const typingIndicator = document.getElementById('typing-indicator');
 
 const intents = {
-    payments: [
-        'pago','pagos','formas de pago','metodo de pago','transferencia',
-        'mercado pago','deel','payoneer','tarjeta','paypal'
-    ],
-    price: [
-        'precio','cuanto sale','cuanto cuesta','valor','mensual','mes'
-    ],
-    time: [
-        'tiempo','tarda','plazo','entrega','dias'
-    ],
-    free: [
-        'gratis','free','prueba'
-    ],
-    cases: [
-        'caso','ejemplo','experiencia','exito'
-    ],
-    security: [
-        'seguridad','datos','confidencial','seguro'
-    ],
-    tech: [
-        'gcp','snowflake','python','airflow','herramienta','tech'
-    ],
-    workflow: [
-        'metodo','workflow','proceso','pasos','como trabajan'
-    ],
-    human: [
-        'consultor','hablar','persona','reunion','llamada'
-    ]
+    payments: ['pago','pagos','formas de pago','metodo de pago','transferencia','mercado pago','deel','payoneer','tarjeta','paypal'],
+    price: ['precio','cuanto sale','cuanto cuesta','valor','mensual','mes'],
+    time: ['tiempo','tarda','plazo','entrega','dias'],
+    free: ['gratis','free','prueba'],
+    cases: ['caso','ejemplo','experiencia','exito'],
+    security: ['seguridad','datos','confidencial','seguro'],
+    tech: ['gcp','snowflake','python','airflow','herramienta','tech'],
+    workflow: ['metodo','workflow','proceso','pasos','como trabajan'],
+    human: ['consultor','hablar','persona','reunion','llamada']
 };
 
 sendBtn.addEventListener('click', () => {
     const rawText = chatInput.value;
-    const text = rawText
-        .trim()
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
 
-    if (!text) return;
+const normalizedText = rawText
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+   if (!normalizedText) return;
 
     addMessage(rawText, 'user');
     chatInput.value = '';
@@ -155,13 +137,13 @@ sendBtn.addEventListener('click', () => {
         typingIndicator.style.display = 'none';
 
         const detectedIntent = Object.entries(intents)
-            .find(([_, keywords]) => keywords.some(k => text.includes(k)))
-            ?.[0];
+    .find(([_, keywords]) => keywords.some(k => normalizedText.includes(k)))
+    ?.[0];
 
         if (detectedIntent) {
             botReply(detectedIntent);
         } else {
-            console.warn('Fallback:', text);
+           console.warn('Fallback:', normalizedText);
 
             addMessage(
                 currentLang === 'es'
