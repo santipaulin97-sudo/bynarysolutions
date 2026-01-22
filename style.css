@@ -301,3 +301,27 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     display: flex;
     justify-content: center;
 }
+/* ESTILO PARA EL TYPING EFFECT */
+#typing-container {
+    margin: 10px 0 15px 0;
+    min-height: 25px; /* Mantiene el espacio fijo */
+}
+
+#typing-text {
+    color: var(--accent-secondary); /* Cyan brillante */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.cursor {
+    color: var(--accent-secondary);
+    animation: blink 0.7s infinite;
+    font-weight: 300;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
