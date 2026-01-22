@@ -103,7 +103,28 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 /* 7. EQUIPO */
 .team-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 35px; margin-top: 15px; }
 .team-grid .member-card { width: 480px; }
-.team-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--accent-primary); object-fit: cover; align-self: center; margin-bottom: 20px; }
+/* =========================================
+   FOTOS DEL EQUIPO CON ANILLO DE LUZ
+   ========================================= */
+.team-img { 
+    width: 140px; 
+    height: 140px; 
+    border-radius: 50%; 
+    /* Borde con gradiente y sombra de luz neón */
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 20px rgba(0, 102, 255, 0.3), 
+                inset 0 0 10px rgba(0, 102, 255, 0.2);
+    object-fit: cover; 
+    align-self: center; 
+    margin-bottom: 20px;
+    transition: var(--transition-premium);
+}
+
+.member-card:hover .team-img {
+    transform: scale(1.05);
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 30px rgba(0, 224, 255, 0.5); /* Brillo más fuerte al pasar el mouse */
+}
 .socials a i { color: #ffffff; margin: 0 10px; font-size: 1.2rem; transition: 0.3s; }
 .socials a i:hover { color: var(--accent-secondary); }
 
