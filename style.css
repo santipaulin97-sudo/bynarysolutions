@@ -48,6 +48,8 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 /* --- LOGO BYNARY: EFECTO ZOOM & GLOW --- */
 
 /* 1. Contenedor: Solo preparamos el zoom suave */
+/* --- LOGO BYNARY: ZOOM + SKEW + TECH MOTION --- */
+
 .logo { 
     font-family: 'JetBrains Mono', monospace; 
     font-size: 1.8rem;       
@@ -55,33 +57,33 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     letter-spacing: -1px;    
     text-transform: uppercase; 
     cursor: pointer;
-    /* Transición suave para que el crecimiento no sea brusco */
-    transition: transform 0.3s ease;
+
+    transition:
+        transform 0.3s ease,
+        letter-spacing 0.3s ease;
 }
 
-/* 2. El Texto: Color base y brillo inicial */
+/* Texto */
 .logo span { 
     background: var(--accent-gradient); 
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent; 
     
-    /* Brillo base (suave) */
-    filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.3)); 
-    
-    /* Transición suave para el cambio de luz */
+    /* Glow base controlado */
+    filter: drop-shadow(0 0 4px rgba(0, 224, 255, 0.35)); 
     transition: filter 0.3s ease;
 }
 
-/* 3. AL PASAR EL MOUSE (HOVER) */
+/* Hover */
 .logo:hover {
-    /* Se agranda un 8% (sutil pero notable) */
-    transform: scale(1.08); 
+    transform: scale(1.06) skewX(-5deg);
+    letter-spacing: 2px;
 }
 
 .logo:hover span {
-    /* Aumenta el brillo (Glow) y la intensidad del color (Brightness) */
-    filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.9)) brightness(1.3); 
+    filter: drop-shadow(0 0 14px rgba(0, 224, 255, 0.85));
 }
+
 
 .nav-links { display: flex; list-style: none; gap: 35px; }
 .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; font-weight: 500; }
