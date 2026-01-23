@@ -41,8 +41,24 @@ body {
    ========================================= */
 nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
 .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1250px; margin: 0 auto; padding: 0 30px; }
-.logo { font-size: 1.7rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.5px; }
-.logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+/* Estilo del contenedor del logo */
+.logo { 
+    font-family: 'JetBrains Mono', monospace; /* La clave para el look "Tech" */
+    font-size: 1.8rem;       /* Tamaño grande y visible */
+    font-weight: 800;        /* Letra bien gruesa (Bold) */
+    white-space: nowrap; 
+    letter-spacing: -1px;    /* Letras un poco más juntas para modernidad */
+    text-transform: uppercase; /* Fuerza mayúsculas */
+    cursor: pointer;
+}
+
+/* El efecto de color degradado (Cyberpunk) */
+.logo span { 
+    background: var(--accent-gradient); /* Usa tus colores azul/cyan definidos */
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.25)); /* Un brillo suave (glow) */
+}
 
 .nav-links { display: flex; list-style: none; gap: 35px; }
 .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; font-weight: 500; }
