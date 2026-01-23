@@ -50,38 +50,34 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
 /* 1. Contenedor: Solo preparamos el zoom suave */
 /* --- LOGO BYNARY: ZOOM + SKEW + TECH MOTION --- */
 
-.logo { 
-    font-family: 'JetBrains Mono', monospace; 
-    font-size: 1.8rem;       
-    font-weight: 800;        
-    letter-spacing: -1px;    
-    text-transform: uppercase; 
-    cursor: pointer;
+/* --- LOGO BYNARY (VERSIÓN IMAGEN .PNG) --- */
 
-    transition:
-        transform 0.3s ease,
-        letter-spacing 0.3s ease;
+/* 1. Contenedor: Alinea la imagen */
+.logo {
+    display: flex;
+    align-items: center; /* Centrado vertical perfecto */
+    padding: 5px 0;
 }
 
-/* Texto */
-.logo span { 
-    background: var(--accent-gradient); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
+/* 2. La Imagen: Tamaño y Efectos Base */
+.logo img {
+    height: 38px;  /* Altura controlada para el menú */
+    width: auto;   /* Mantiene la proporción */
     
-    /* Glow base controlado */
-    filter: drop-shadow(0 0 4px rgba(0, 224, 255, 0.35)); 
-    transition: filter 0.3s ease;
+    /* Filtro inicial: Un brillo azul suave para integrarlo al fondo oscuro */
+    filter: drop-shadow(0 0 4px rgba(0, 224, 255, 0.35));
+    
+    /* Transición suave para el movimiento y la luz */
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Hover */
-.logo:hover {
-    transform: scale(1.06) skewX(-5deg);
-    letter-spacing: 2px;
-}
-
-.logo:hover span {
-    filter: drop-shadow(0 0 14px rgba(0, 224, 255, 0.85));
+/* 3. HOVER: Efecto Tech (Zoom + Skew + Super Glow) */
+.logo:hover img {
+    /* Mantenemos tu idea del Skew (inclinación) porque queda muy bien */
+    transform: scale(1.08) skewX(-5deg);
+    
+    /* Aumentamos el brillo y la intensidad de la luz */
+    filter: drop-shadow(0 0 15px rgba(0, 224, 255, 0.85)) brightness(1.2);
 }
 
 
