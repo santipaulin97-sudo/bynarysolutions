@@ -42,22 +42,38 @@ body {
 nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
 .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1250px; margin: 0 auto; padding: 0 30px; }
 /* Estilo del contenedor del logo */
+/* --- LOGO TECH BYNARY CON EFECTO --- */
+
+/* 1. Contenedor y movimiento */
 .logo { 
-    font-family: 'JetBrains Mono', monospace; /* La clave para el look "Tech" */
-    font-size: 1.8rem;       /* Tamaño grande y visible */
-    font-weight: 800;        /* Letra bien gruesa (Bold) */
-    white-space: nowrap; 
-    letter-spacing: -1px;    /* Letras un poco más juntas para modernidad */
-    text-transform: uppercase; /* Fuerza mayúsculas */
+    font-family: 'JetBrains Mono', monospace; 
+    font-size: 1.8rem;       
+    font-weight: 800;        
+    letter-spacing: -1px;    
+    text-transform: uppercase; 
     cursor: pointer;
+    /* Esto prepara la animación suave */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* El efecto de color degradado (Cyberpunk) */
+/* 2. El texto con color degradado */
 .logo span { 
-    background: var(--accent-gradient); /* Usa tus colores azul/cyan definidos */
+    background: var(--accent-gradient); 
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent; 
-    filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.25)); /* Un brillo suave (glow) */
+    /* Brillo inicial suave */
+    filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.3)); 
+    transition: filter 0.3s ease;
+}
+
+/* 3. EL EFECTO AL PASAR EL MOUSE (LO NUEVO) */
+.logo:hover {
+    transform: scale(1.1) rotate(-2deg); /* Crece y se inclina un poco */
+}
+
+.logo:hover span {
+    /* Explota el brillo tipo Neón / Cyberpunk */
+    filter: drop-shadow(0 0 20px rgba(0, 224, 255, 0.8)); 
 }
 
 .nav-links { display: flex; list-style: none; gap: 35px; }
