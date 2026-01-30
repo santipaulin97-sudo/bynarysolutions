@@ -406,3 +406,13 @@ nav { padding: 25px 0; background: rgba(8, 12, 20, 0.95); backdrop-filter: blur(
     display: flex;
     justify-content: center;
 }
+/* =========================================
+   CORRECCIÓN DE SCROLL (PARA QUE EL MENÚ NO TAPE)
+   ========================================= */
+html {
+    scroll-behavior: smooth; /* Asegura suavidad global */
+}
+
+section, header, #servicios, #casos, #packs, #equipo {
+    scroll-margin-top: 110px; /* Deja espacio para la barra de navegación */
+}
