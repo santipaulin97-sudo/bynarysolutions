@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. CONFIGURACIÓN GLOBAL & IDIOMA
     // ==========================================
     let currentLang = 'es';
+    let lastIntent = null;
     const langToggle = document.getElementById('lang-switch');
     const langOptions = document.querySelectorAll('.lang-opt');
 
@@ -178,7 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
             hideTyping();
             
             const normalizedText = rawText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            
+
+             // 🔹 CONFIRMACIONES
+        if (['si','yes','ok','dale','sure'].includes(normalizedText)) {
+            if (lastIntent === 'price' || lastIntent === 'free') {
+                addMessage(botResponses.human[currentLang], 'bot');
+                lastIntent = null;
+                setTimeout(showChatMenu, 800);
+                return;
+            }
+        }
             // Buscar coincidencia
             const match = Object.entries(intents).find(([_, keywords]) => 
                 keywords.some(k => normalizedText.includes(k))
@@ -186,21 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const detectedIntent = match ? match[0] : null;
 
-            if (detectedIntent && botResponses[detectedIntent]) {
-                addMessage(botResponses[detectedIntent][currentLang], 'bot');
-                // Mostrar menú de nuevo, salvo si pidieron hablar con humano
-                if (detectedIntent !== 'human') setTimeout(showChatMenu, 800);
-            } else {
-                // Fallback
-                const fallbackMsg = currentLang === 'es' 
-                    ? "No estoy seguro de haber entendido 🤔. Pero puedo ayudarte con **Precios**, **Tecnología** o agendar una **Llamada**."
-                    : "I'm not sure I got that 🤔. But I can help you with **Pricing**, **Tech**, or booking a **Call**.";
-                
-                addMessage(fallbackMsg, 'bot');
-                setTimeout(showChatMenu, 500);
+            
+        if (detectedIntent && botResponses[detectedIntent]) {
+            lastIntent = detectedIntent; // 🔹 GUARDAR CONTEXTO
+            addMessage(botResponses[detectedIntent][currentLang], 'bot');
+
+            if (detectedIntent !== 'human') {
+                setTimeout(showChatMenu, 800);
             }
-        }, 800);
-    }
+        } else {
+            const fallbackMsg = currentLang === 'es' 
+                ? "No estoy seguro de haber entendido 🤔. Pero puedo ayudarte con **Precios**, **Tecnología** o agendar una **Llamada**."
+                : "I'm not sure I got that 🤔. But I can help you with **Pricing**, **Tech**, or booking a **Call**.";
+
+            addMessage(fallbackMsg, 'bot');
+            setTimeout(showChatMenu, 500);
+        }
+    }, 800);
+}
 
     function botReply(action) {
         showTyping();
