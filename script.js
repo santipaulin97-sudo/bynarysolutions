@@ -66,37 +66,37 @@ const botResponses = {
         es: "Nuestra **Automatización Gratis** es un proyecto real de 1-2 semanas para un proceso simple (ej. carga de facturas o reportes Excel). Sin costo, para que valides el ahorro real.",
         en: "Our **Free Automation** is a real 1-2 week project for a simple process (e.g., invoice loading or Excel reports). No cost, so you can validate the real savings."
     },
+    free: {
+        es: "Nuestra **Automatización Gratis** es un proyecto real de 1 semana (ej. leer facturas, enviar emails). Sin costo, para que pruebes nuestra calidad. ¿Te interesa?",
+        en: "Our **Free Automation** is a real 1-week project (e.g., reading invoices, sending emails). No cost, just to prove our quality. Interested?"
+    },
     price: {
-        es: "Los packs Pro inician en **USD 300/mes**. Para soluciones de IA avanzada o Arquitectura de Datos completa, presupuestamos a medida según la complejidad.",
-        en: "Pro packs start at **USD 300/mo**. For advanced AI solutions or complete Data Architecture, we provide custom quotes based on complexity."
+        es: "Tenemos 2 modelos: <br>1. **Proyecto Puntual:** Desde $300 USD.<br>2. **Mantenimiento Mensual:** Para soporte continuo.<br>¿Te gustaría agendar una llamada para cotizar?",
+        en: "We have 2 models: <br>1. **One-off Project:** Starts at $300 USD.<br>2. **Monthly Retainer:** For continuous support.<br>Would you like to book a call for a quote?"
     },
     payments: {
-        es: "Aceptamos **Transferencia bancaria (ARS/USD)**, **Mercado Pago** (Argentina), y plataformas internacionales como **Deel o Payoneer**. Ofrecemos facturación y pagos por hitos.",
-        en: "We accept **Bank Transfers (ARS/USD)**, **Mercado Pago** (Argentina), and international platforms like **Deel or Payoneer**. We offer invoicing and milestone-based payments."
+        es: "Aceptamos **Transferencia bancaria (ARS/USD)**, **Mercado Pago**, Crypto (USDT) y plataformas como **Deel o Payoneer**. Emitimos factura internacional.",
+        en: "We accept **Bank Transfers (ARS/USD)**, **Mercado Pago**, Crypto (USDT), and platforms like **Deel or Payoneer**. International invoicing available."
     },
     time: {
-        es: "Un proyecto promedio tarda de **2 a 4 semanas** en estar productivo. Las automatizaciones simples del pack gratuito se entregan en **7-10 días**.",
-        en: "An average project takes **2 to 4 weeks** to go live. Simple automations from the free pack are delivered in **7-10 days**."
+        es: "Somos rápidos. La automatización gratuita toma **3-5 días**. Proyectos complejos de Data Engineering toman de **2 a 4 semanas**.",
+        en: "We are fast. The free automation takes **3-5 days**. Complex Data Engineering projects take **2-4 weeks**."
     },
     cases: {
-        es: "Hemos desarrollado **Agentes de RRHH con IA**, conciliaciones bancarias automáticas y sistemas de validación de datos financieros con 100% de precisión.",
-        en: "We have developed **AI HR Agents**, automated bank reconciliations, and financial data validation systems with 100% accuracy."
+        es: "Hemos creado **Agentes de RRHH**, conciliaciones bancarias automáticas y validación de datos financieros. Ahorramos +40hs semanales a nuestros clientes.",
+        en: "We've built **HR Agents**, automated bank reconciliations, and financial data validation. We save our clients +40hs per week."
     },
     security: {
-        es: "Priorizamos la seguridad. Aplicamos estándares de **Mercado Libre** para el manejo de datos, encriptación y entornos Cloud Native (AWS/GCP) seguros.",
-        en: "We prioritize security. We apply **Mercado Libre** standards for data handling, encryption, and secure Cloud Native environments (AWS/GCP)."
+        es: "Tu seguridad es prioridad. Firmamos **NDA (Acuerdo de Confidencialidad)**. Usamos infraestructura encriptada en AWS/GCP. Tus datos nunca se comparten.",
+        en: "Security is priority. We sign an **NDA**. We use encrypted infrastructure on AWS/GCP. Your data is never shared."
     },
     tech: {
-        es: "Nuestro stack: **GCP, Snowflake, Apache Airflow, n8n, Python y GPT-4o**. Integramos SAP, Salesforce, Excel y cualquier app con API.",
-        en: "Our stack: **GCP, Snowflake, Apache Airflow, n8n, Python, and GPT-4o**. We integrate SAP, Salesforce, Excel, and any app with an API."
-    },
-    workflow: {
-        es: "Metodología: 1. **Diagnóstico** (Gratis). 2. **MVP** (Funcional rápido). 3. **Escalabilidad** y Soporte continuo.",
-        en: "Methodology: 1. **Diagnosis** (Free). 2. **MVP** (Fast functional). 3. **Scalability** and continuous Support."
+        es: "Stack Cloud Native: **Python, AWS/GCP, Snowflake, Airflow y GPT-4o**. Código robusto y escalable, nada de soluciones 'low-code' frágiles.",
+        en: "Cloud Native Stack: **Python, AWS/GCP, Snowflake, Airflow, and GPT-4o**. Robust and scalable code, no fragile 'low-code' solutions."
     },
     human: {
-        es: "¡Excelente! Te derivaré con un consultor. Agenda tu llamada de 30 min aquí: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF'>📅 Agendar Llamada</a>",
-        en: "Excellent! I'll refer you to a consultant. Book your 30-min call here: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF'>📅 Book a Call</a>"
+        es: "¡Claro! A veces es mejor hablar. Agenda 30 min con Santiago o Tomás aquí: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Agendar Llamada</a>",
+        en: "Sure! Sometimes talking is better. Book 30 mins with Santiago or Tomás here: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Book a Call</a>"
     }
 };
 
@@ -107,15 +107,15 @@ const chatBody = document.getElementById('chat-body');
 const typingIndicator = document.getElementById('typing-indicator');
 
 const intents = {
-    payments: ['pago','pagos','formas de pago','metodo de pago','transferencia','mercado pago','deel','payoneer','tarjeta','paypal'],
-    price: ['precio','cuanto sale','cuanto cuesta','valor','mensual','mes'],
-    time: ['tiempo','tarda','plazo','entrega','dias'],
-    free: ['gratis','free','prueba'],
-    cases: ['caso','ejemplo','experiencia','exito'],
-    security: ['seguridad','datos','confidencial','seguro'],
-    tech: ['gcp','snowflake','python','airflow','herramienta','tech'],
-    workflow: ['metodo','workflow','proceso','pasos','como trabajan'],
-    human: ['consultor','hablar','persona','reunion','llamada']
+    greetings: ['hola', 'buen dia', 'buenas', 'hello', 'hi', 'hey', 'start'],
+    payments: ['pago', 'pagos', 'formas de pago', 'metodo', 'transferencia', 'factura', 'usdt', 'crypto', 'payoneer'],
+    price: ['precio', 'costo', 'cuanto sale', 'valor', 'tarifas', 'price', 'cost', 'rates'],
+    time: ['tiempo', 'tarda', 'plazo', 'demora', 'dias', 'time', 'how long'],
+    free: ['gratis', 'free', 'prueba', 'regalo', 'trial'],
+    security: ['seguridad', 'datos', 'confidencial', 'nda', 'proteccion', 'security', 'privacy'],
+    tech: ['tecnologia', 'stack', 'python', 'aws', 'google', 'cloud', 'tech', 'tools'],
+    human: ['persona', 'humano', 'contacto', 'reunion', 'llamada', 'zoom', 'meet', 'calendly'],
+    cases: ['casos', 'ejemplos', 'experiencia', 'exito', 'cases', 'examples']
 };
 
 sendBtn.addEventListener('click', () => {
