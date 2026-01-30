@@ -263,20 +263,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. ANIMACIONES AL SCROLLEAR
-    // ==========================================
+  // 5. ANIMACIONES AL SCROLLEAR Y NAVEGACIÓN
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     
-    // Smooth Scroll para los links del menú
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
-        });
+// --- LÓGICA DE NAVEGACIÓN MEJORADA (LOGO + SECCIONES) ---
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        
+        // CASO 1: Si es el Logo (href="#") -> Ir arriba de todo
+        if (targetId === '#') {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        } 
+        // CASO 2: Si es una sección (href="#packs") -> Ir a la sección
+        else {
+            const target = document.querySelector(targetId);
+            if (target) { 
+                target.scrollIntoView({ behavior: 'smooth' }); 
+            }
+        }
     });
-
 });
