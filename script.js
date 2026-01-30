@@ -216,7 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function addMessage(text, type) {
         const msg = document.createElement('div');
         msg.className = `message ${type}`;
-        msg.innerHTML = text; 
+        
+        // ESTA ES LA MAGIA: Reemplaza **texto** por <strong>texto</strong>
+        const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        
+        msg.innerHTML = formattedText; 
         chatBody.insertBefore(msg, typingIndicator); 
         chatBody.scrollTop = chatBody.scrollHeight;
     }
