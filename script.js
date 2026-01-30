@@ -77,16 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Palabras clave para detectar intención
     const intents = {
-        greetings: ['hola', 'buen dia', 'buenas', 'hello', 'hi', 'hey', 'start'],
-        payments: ['pago', 'pagos', 'formas de pago', 'metodo', 'transferencia', 'factura', 'usdt', 'crypto', 'payoneer'],
-        price: ['precio', 'costo', 'cuanto sale', 'valor', 'tarifas', 'price', 'cost', 'rates', 'planes'],
-        time: ['tiempo', 'tarda', 'plazo', 'demora', 'dias', 'time', 'how long'],
-        free: ['gratis', 'free', 'prueba', 'regalo', 'trial'],
-        security: ['seguridad', 'datos', 'confidencial', 'nda', 'proteccion', 'security', 'privacy'],
-        tech: ['tecnologia', 'stack', 'python', 'aws', 'google', 'cloud', 'tech', 'tools'],
-        human: ['persona', 'humano', 'contacto', 'reunion', 'llamada', 'zoom', 'meet', 'calendly', 'agendar'],
-        cases: ['casos', 'ejemplos', 'experiencia', 'exito', 'cases', 'examples']
-    };
+       greetings: ['hola','hello','hi','hey','buen dia','buenos dias','buenas','start','inicio','arrancar','empezar','info','info?','hey bot'],
+         payments: ['pago','pagos','pagar','payment','payments','pay','formas de pago','metodo','metodos','transferencia','transferir','factura','invoice','billing','cobro','cobrar','usdt','crypto','cripto','bitcoin','eth','payoneer','deel','mercado pago'],
+        price: ['precio','precios','price','prices','cost','costs','costo','costos','cuanto sale','cuanto cuesta','how much','rate','rates','tarifa','tarifas','planes','plan','valor','fee','fees','$$','$','usd'],
+          time: ['tiempo','time','timing','tarda','tardan','demora','demoran','plazo','dias','semanas','meses','how long','when','cuando'],
+         free: ['gratis','free','free trial','trial','prueba','demo','test','sin costo','regalo','probar','sample'],
+        security: ['seguridad','security','datos','data','privacy','privacidad','confidencial','nda','legal','contrato','proteccion','safe','secure'],
+         tech: ['tech','tecnologia','tecnologías','stack','tools','herramientas','python','aws','gcp','google','cloud','sql','etl','data','ai','ia','gpt'],
+         human: ['humano','persona','alguien','contacto','hablar','llamada','call','reunion','meeting','zoom','meet','calendly','agendar','charlar'],
+         cases: ['casos','case','cases','ejemplos','example','examples','experiencia','clientes','exito','resultados','portfolio','proyectos']
+};
 
     // Respuestas del Bot
     const botResponses = {
