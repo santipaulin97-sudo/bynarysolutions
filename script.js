@@ -78,16 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Palabras clave para detectar intención
     const intents = {
-       greetings: ['hola','hello','hi','hey','buen dia','buenos dias','buenas','start','inicio','arrancar','empezar','info','info?','hey bot'],
-         payments: ['pago','pagos','pagar','payment','payments','pay','formas de pago','metodo','metodos','transferencia','transferir','factura','invoice','billing','cobro','cobrar','usdt','crypto','cripto','bitcoin','eth','payoneer','deel','mercado pago'],
-        price: ['precio','precios','price','prices','cost','costs','costo','costos','cuanto sale','cuanto cuesta','how much','rate','rates','tarifa','tarifas','planes','plan','valor','fee','fees','$$','$','usd'],
-          time: ['tiempo','time','timing','tarda','tardan','demora','demoran','plazo','dias','semanas','meses','how long','when','cuando'],
-         free: ['gratis','free','free trial','trial','prueba','demo','test','sin costo','regalo','probar','sample'],
-        security: ['seguridad','security','datos','data','privacy','privacidad','confidencial','nda','legal','contrato','proteccion','safe','secure'],
-         tech: ['tech','tecnologia','tecnologías','stack','tools','herramientas','python','aws','gcp','google','cloud','sql','etl','data','ai','ia','gpt'],
-         human: ['humano','persona','alguien','contacto','hablar','llamada','call','reunion','meeting','zoom','meet','calendly','agendar','charlar'],
-         cases: ['casos','case','cases','ejemplos','example','examples','experiencia','clientes','exito','resultados','portfolio','proyectos']
-};
+       greetings: ['hola','hello','hi','hey','buen dia','buenos dias','buenas','start','inicio','arrancar','empezar','info','hey bot'],
+       payments: ['pago','pagos','pagar','payment','payments','pay','formas de pago','metodo','metodos','transferencia','factura','invoice','usdt','crypto','payoneer','deel','mercado pago'],
+       price: ['precio','precios','price','prices','cost','costs','costo','costos','cuanto sale','cuanto cuesta','rate','rates','tarifa','tarifas','planes','plan','valor','fee','fees','$$','$','usd'],
+       time: ['tiempo','time','timing','tarda','tardan','demora','demoran','plazo','dias','semanas','meses','how long','when','cuando'],
+       free: ['gratis','free','free trial','trial','prueba','demo','test','sin costo','regalo','probar','sample'],
+       security: ['seguridad','security','datos','data','privacy','privacidad','confidencial','nda','legal','contrato','proteccion','safe','secure'],
+       tech: ['tech','tecnologia','tecnologías','stack','tools','herramientas','python','aws','gcp','google','cloud','sql','etl','lenguaje','codigo','programacion'],
+       agent: ['agente','agentes','agent','agents','bot','bots','ia','inteligencia','artificial','gpt','llm','que es un agente','what is an agent'],
+       human: ['humano','persona','alguien','contacto','hablar','llamada','call','reunion','meeting','zoom','meet','calendly','agendar','charlar'],
+       cases: ['casos','case','cases','ejemplos','example','examples','experiencia','clientes','exito','resultados','portfolio','proyectos']
+    };
 
     // Respuestas del Bot
     const botResponses = {
@@ -120,8 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
             en: "Security is priority. We sign an **NDA**. We use encrypted infrastructure on AWS/GCP. Your data is never shared."
         },
         tech: {
-            es: "Stack Cloud Native: **Python, AWS/GCP, Snowflake, Airflow y GPT-4o**. Código robusto y escalable, nada de soluciones 'low-code' frágiles.",
-            en: "Cloud Native Stack: **Python, AWS/GCP, Snowflake, Airflow, and GPT-4o**. Robust and scalable code, no fragile 'low-code' solutions."
+            es: "Somos **Cloud Native**. Usamos **Python** como motor principal, orquestado en **AWS/GCP**. Integramos modelos LLM (GPT-4o/Claude) con tus datos vía **RAG** (Retrieval-Augmented Generation) para precisión total. Nada de 'low-code' frágil.",
+            en: "We are **Cloud Native**. We use **Python** as our main engine, orchestrated on **AWS/GCP**. We integrate LLM models (GPT-4o/Claude) with your data via **RAG** for total precision. No fragile 'low-code' tools."
+        },
+        agent: {
+            es: "Un **Agente IA** no es un simple chatbot. Es un 'empleado digital' capaz de razonar, usar herramientas (Excel, Email, CRMs) y ejecutar tareas complejas 24/7 sin descanso. ¿Te imaginas tener uno trabajando para ti?",
+            en: "An **AI Agent** is not just a chatbot. It's a 'digital employee' capable of reasoning, using tools (Excel, Email, CRMs), and executing complex tasks 24/7 without rest. Imagine having one working for you?"
         },
         human: {
             es: "¡Claro! A veces es mejor hablar. Agenda 30 min con Santiago o Tomás aquí: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Agendar Llamada</a>",
