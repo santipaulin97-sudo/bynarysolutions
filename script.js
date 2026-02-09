@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.add('active');
             currentLang = target.getAttribute('data-value');
 
-            // Actualizar textos estáticos
+            // Actualizar textos estáticos del sitio
             document.querySelectorAll('[data-es]').forEach(el => {
                 const text = el.getAttribute(`data-${currentLang}`);
                 if (text) {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             
-            // Actualizar placeholder del chat si existe
+            // Actualizar placeholder del chat
             if(chatInput) chatInput.placeholder = chatInput.getAttribute(`data-${currentLang}-placeholder`);
         });
     }
@@ -74,14 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
     typeEffect();
 
     // ==========================================
-    // 3. CEREBRO IA (CONECTADO A GEMINI FLASH)
+    // 3. CEREBRO IA (CONECTADO A GEMINI 1.5 FLASH)
     // ==========================================
     
-    const API_KEY = "AIzaSyBIouGHm5eeMRxdefGqM7T28UK6Auzw4Qs"; // TU API KEY
+    // TU API KEY REAL
+    const API_KEY = "AIzaSyBIouGHm5eeMRxdefGqM7T28UK6Auzw4Qs"; 
     
-    // Instrucciones del Sistema (La personalidad del Bot)
+    // Configuración de la IA
     const getSystemInstruction = (lang) => {
-        const baseInfo = `
+        return `
         Eres "BYN Bot", el asistente experto en ventas de BYNARY Solutions (Consultora de IA y Data).
         Tu objetivo: Responder dudas cortas, vender autoridad técnica y persuadir al usuario para agendar una llamada.
         
@@ -89,28 +90,28 @@ document.addEventListener('DOMContentLoaded', () => {
         - Servicios: Automatización de Procesos (Python), Agentes IA, Data Engineering (ETL, SQL), Dashboards (Looker Studio), Conciliación Bancaria Automática.
         - Diferencial: No usamos "low-code" frágil. Somos Cloud Native (AWS/GCP) y usamos Python robusto. Eliminamos el Excel manual.
         - Precios: 
-          1. Plan Standard (Desde $400 USD/mes): Mantenimiento, monitoreo 24/7 y estabilidad.
+          1. Plan Standard ($400 USD/mes): Mantenimiento, monitoreo 24/7 y estabilidad.
           2. Plan Premium (Desde $700 USD/mes): Desarrollo continuo, nuevos agentes a medida y escalabilidad.
           3. Prueba Gratis: Automatización de 1 semana sin costo (Gancho de venta).
         - Equipo: Santiago Paulin (Data Engineer), Tomas Gnarra (Data Scientist).
         
         REGLAS DE COMPORTAMIENTO:
         1. Sé breve (máximo 2-3 oraciones). Usa emojis tech (🚀, 🤖, ⚡).
-        2. Si preguntan precios, explica la diferencia entre mantener (400) vs escalar (700).
+        2. Si preguntan precios, explica la diferencia entre mantener vs escalar.
         3. Si preguntan "¿Qué es un agente?", véndelo como un "Empleado Digital 24/7".
         4. SIEMPRE intenta cerrar invitando a agendar: "https://calendly.com/santipaulin97/30min".
         5. IMPORTANTE: Responde SIEMPRE en el idioma: ${lang === 'es' ? 'ESPAÑOL' : 'INGLÉS'}.
         `;
-        return baseInfo;
     };
 
-    // Función para llamar a la IA de Google
+    // Función para llamar a Google Gemini
     async function getGeminiResponse(userMessage) {
+        // Usamos la versión v1beta y el modelo flash que es más rápido/barato
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
         
         const requestBody = {
             contents: [{
-                parts: [{ text: `System: ${getSystemInstruction(currentLang)}\nUser: ${userMessage}` }]
+                parts: [{ text: `Instrucciones del Sistema: ${getSystemInstruction(currentLang)}\n\nUsuario dice: ${userMessage}` }]
             }]
         };
 
@@ -123,15 +124,23 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const data = await response.json();
             
-            // Verificar si hay respuesta válida
-            if (data.candidates && data.candidates[0].content) {
+            // Verificación de errores en la consola (Presiona F12 en tu navegador si falla)
+            if (!response.ok) {
+                console.error("Error de API Google:", data);
+                throw new Error("Error en la respuesta de la API");
+            }
+
+            // Extraer texto de forma segura
+            if (data.candidates && data.candidates.length > 0 && data.candidates[0].content) {
                 return data.candidates[0].content.parts[0].text;
             } else {
-                throw new Error("Respuesta vacía de la API");
+                console.error("Respuesta vacía o bloqueada por seguridad:", data);
+                return "Lo siento, no pude procesar eso. ¿Podemos hablar mejor en una llamada? 📅";
             }
+
         } catch (error) {
-            console.error("Error IA:", error);
-            // Fallback por si la IA falla
+            console.error("Fallo crítico en fetch:", error);
+            // Mensaje de Fallback amigable
             return currentLang === 'es' 
                 ? "Mis circuitos están saturados 🔌. Pero me encantaría hablar contigo. ¿Agendamos? <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Agendar</a>"
                 : "My circuits are overloaded 🔌. But I'd love to chat. Book a call? <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Book Now</a>";
@@ -165,13 +174,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if(chatBody) {
         chatBody.addEventListener('click', (e) => {
             if (e.target.classList.contains('chat-opt-btn')) {
-                const text = e.target.innerText; // El texto del botón es lo que enviamos
+                const text = e.target.innerText;
                 
                 // Procesar como si el usuario lo escribiera
-                chatInput.value = text;
-                processUserMessage();
+                // No lo ponemos en el input para que sea más limpio, directo al chat
+                addMessage(text, 'user');
+                showTyping();
                 
-                // Eliminar menú de opciones tras click
+                // Llamar a la IA con el texto del botón
+                getGeminiResponse(text).then(response => {
+                    hideTyping();
+                    const formattedResponse = formatResponse(response);
+                    addMessage(formattedResponse, 'bot');
+                    setTimeout(showChatMenu, 2500);
+                });
+
+                // Eliminar menú de opciones
                 const menu = e.target.parentElement;
                 if (menu.classList.contains('chat-options')) menu.remove();
             }
@@ -190,27 +208,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Mostrar "Escribiendo..."
         showTyping();
 
-        // 3. Consultar a la IA (Gemini)
+        // 3. Consultar a la IA
         const aiResponse = await getGeminiResponse(rawText);
         
         // 4. Ocultar typing y Mostrar respuesta
         hideTyping();
         
-        // Formatear respuesta (Markdown a HTML básico)
-        const formattedResponse = aiResponse
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negritas
-            .replace(/\n/g, '<br>'); // Saltos de línea
-            
+        const formattedResponse = formatResponse(aiResponse);
         addMessage(formattedResponse, 'bot');
         
-        // Mostrar botones de nuevo después de un momento
+        // Mostrar botones de nuevo
         setTimeout(showChatMenu, 2500);
+    }
+
+    // Función auxiliar para formatear texto (Negritas y saltos de línea)
+    function formatResponse(text) {
+        if (!text) return "";
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negritas Markdown a HTML
+            .replace(/\n/g, '<br>'); // Saltos de línea
     }
 
     function addMessage(text, type) {
         const msg = document.createElement('div');
         msg.className = `message ${type}`;
-        msg.innerHTML = text; // Ya viene formateado
+        msg.innerHTML = text; 
         chatBody.insertBefore(msg, typingIndicator); 
         chatBody.scrollTop = chatBody.scrollHeight;
     }
@@ -242,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. ANIMACIONES (REVEAL) & SCROLL SUAVE (NAV)
+    // 5. ANIMACIONES Y SCROLL
     // ==========================================
     
     const observer = new IntersectionObserver((entries) => {
