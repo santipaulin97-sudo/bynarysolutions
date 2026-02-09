@@ -18,26 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const typingIndicator = document.getElementById('typing-indicator');
 
     // Lógica de Cambio de Idioma
-    langToggle.addEventListener('click', (e) => {
-        const target = e.target.closest('.lang-opt');
-        if (!target || target.classList.contains('active')) return;
+    if(langToggle) {
+        langToggle.addEventListener('click', (e) => {
+            const target = e.target.closest('.lang-opt');
+            if (!target || target.classList.contains('active')) return;
 
-        langOptions.forEach(opt => opt.classList.remove('active'));
-        target.classList.add('active');
-        currentLang = target.getAttribute('data-value');
+            langOptions.forEach(opt => opt.classList.remove('active'));
+            target.classList.add('active');
+            currentLang = target.getAttribute('data-value');
 
-        // Actualizar textos estáticos
-        document.querySelectorAll('[data-es]').forEach(el => {
-            const text = el.getAttribute(`data-${currentLang}`);
-            if (text) {
-                if (el.tagName === 'INPUT') el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
-                else el.innerHTML = text;
-            }
+            // Actualizar textos estáticos
+            document.querySelectorAll('[data-es]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) {
+                    if (el.tagName === 'INPUT') el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
+                    else el.innerHTML = text;
+                }
+            });
+            
+            // Actualizar placeholder del chat si existe
+            if(chatInput) chatInput.placeholder = chatInput.getAttribute(`data-${currentLang}-placeholder`);
         });
-        
-        // Actualizar placeholder del chat si existe
-        if(chatInput) chatInput.placeholder = chatInput.getAttribute(`data-${currentLang}-placeholder`);
-    });
+    }
 
     // ==========================================
     // 2. EFECTO TYPING (HERO SECTION)
@@ -73,28 +75,46 @@ document.addEventListener('DOMContentLoaded', () => {
     typeEffect();
 
     // ==========================================
-    // 3. CEREBRO DEL BOT (COREGIIDO)
+    // 3. CEREBRO DEL BOT (LÓGICA CORREGIDA)
     // ==========================================
     
-    // Palabras clave para detectar intención
     const intents = {
-       greetings: ['hola','hello','hi','hey','buen dia','buenos dias','buenas','start','inicio','arrancar','empezar','info','hey bot'],
-       payments: ['pago','pagos','pagar','payment','payments','pay','formas de pago','metodo','metodos','transferencia','factura','invoice','usdt','crypto','payoneer','deel','mercado pago'],
+       // Contacto Directo
+       human: ['humano','persona','alguien','contacto','hablar','llamada','call','reunion','meeting','zoom','meet','calendly','agendar','charlar', 'whatsapp', 'phone', 'telefono'],
+       
+       // Precios
        price: ['precio','precios','price','prices','cost','costs','costo','costos','cuanto sale','cuanto cuesta','rate','rates','tarifa','tarifas','planes','plan','valor','fee','fees','$$','$','usd'],
-       time: ['tiempo','time','timing','tarda','tardan','demora','demoran','plazo','dias','semanas','meses','how long','when','cuando'],
+       
+       // Casos de Uso (Reconciliation, Vendors, Reporting)
+       cases: ['casos','case','cases','ejemplos','example','examples','experiencia','clientes','exito','resultados','portfolio','proyectos', 'reconciliation', 'conciliacion', 'vendor', 'proveedor', 'suppliers', 'cierre', 'closing', 'report', 'reporte'],
+       
+       // Gratis
        free: ['gratis','free','free trial','trial','prueba','demo','test','sin costo','regalo','probar','sample'],
-       security: ['seguridad','security','datos','data','privacy','privacidad','confidencial','nda','legal','contrato','proteccion','safe','secure'],
+       
+       // Tecnología
        tech: ['tech','tecnologia','tecnologías','stack','tools','herramientas','python','aws','gcp','google','cloud','sql','etl','lenguaje','codigo','programacion'],
+       
+       // Agentes / Definición
        agent: ['agente','agentes','agent','agents','bot','bots','ia','inteligencia','artificial','gpt','llm','que es un agente','what is an agent'],
-       human: ['humano','persona','alguien','contacto','hablar','llamada','call','reunion','meeting','zoom','meet','calendly','agendar','charlar'],
-       cases: ['casos','case','cases','ejemplos','example','examples','experiencia','clientes','exito','resultados','portfolio','proyectos']
+       
+       // Pagos (Métodos + Bank/Card genérico)
+       payments: ['pago','pagos','pagar','payment','payments','pay','formas de pago','metodo','metodos','transferencia','factura','invoice','usdt','crypto','payoneer','deel','mercado pago', 'bank', 'banco', 'card', 'tarjeta', 'credit', 'credito'],
+       
+       // Seguridad
+       security: ['seguridad','security','datos','data','privacy','privacidad','confidencial','nda','legal','contrato','proteccion','safe','secure'],
+       
+       // Tiempo
+       time: ['tiempo','time','timing','tarda','tardan','demora','demoran','plazo','dias','semanas','meses','how long','when','cuando'],
+       
+       // Saludos
+       greetings: ['hola','hello','hi','hey','buen dia','buenos dias','buenas','start','inicio','arrancar','empezar','info','hey bot']
     };
 
     // Respuestas del Bot
     const botResponses = {
         greetings: {
-            es: "¡Hola! Soy BYN Bot 🤖. Estoy aquí para ayudarte a automatizar tu negocio. Pregúntame sobre **precios**, **tiempos** o nuestra **prueba gratis**.",
-            en: "Hi! I'm BYN Bot 🤖. I'm here to help you automate your business. Ask me about **pricing**, **timelines**, or our **free trial**."
+            es: "¡Hola! Soy BYN Bot 🤖. Estoy aquí para ayudarte a escalar tu negocio. Pregúntame sobre **precios**, **qué es un agente IA** o nuestra **prueba gratis**.",
+            en: "Hi! I'm BYN Bot 🤖. I'm here to help you scale your business. Ask me about **pricing**, **what an AI agent is**, or our **free trial**."
         },
         free: {
             es: "Nuestra **Automatización Gratis** es un proyecto real de 1 semana (ej. leer facturas, enviar emails). Sin costo, para que pruebes nuestra calidad. ¿Te interesa?",
@@ -113,15 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
             en: "We are fast. The free automation takes **3-5 days**. Complex Data Engineering projects take **2-4 weeks**."
         },
         cases: {
-            es: "Hemos creado **Agentes de RRHH**, conciliaciones bancarias automáticas y validación de datos financieros. Ahorramos +40hs semanales a nuestros clientes.",
-            en: "We've built **HR Agents**, automated bank reconciliations, and financial data validation. We save our clients +40hs per week."
+            es: "Nuestros casos estrella: <br>1. **Conciliación Bancaria y de Tarjetas:** 100% automática. <br>2. **Proveedores (Vendors):** Conciliación automática de cuentas corrientes.<br>3. **Reportes en Tiempo Real:** Para cierres económicos sin estrés.<br>Reducimos costos y tiempos operativos.",
+            en: "Our star cases: <br>1. **Bank & Card Reconciliation:** 100% automated. <br>2. **Vendors/Suppliers:** Automatic account reconciliation.<br>3. **Real-Time Reporting:** For stress-free economic closings.<br>We reduce operating costs and time."
         },
         security: {
             es: "Tu seguridad es prioridad. Firmamos **NDA (Acuerdo de Confidencialidad)**. Usamos infraestructura encriptada en AWS/GCP. Tus datos nunca se comparten.",
             en: "Security is priority. We sign an **NDA**. We use encrypted infrastructure on AWS/GCP. Your data is never shared."
         },
         tech: {
-            es: "Somos **Cloud Native**. Usamos **Python** como motor principal, orquestado en **AWS/GCP**. Integramos modelos LLM (GPT-4o/Claude) con tus datos vía **RAG** (Retrieval-Augmented Generation) para precisión total. Nada de 'low-code' frágil.",
+            es: "Somos **Cloud Native**. Usamos **Python** como motor principal, orquestado en **AWS/GCP**. Integramos modelos LLM (GPT-4o/Claude) con tus datos vía **RAG** para precisión total. Nada de 'low-code' frágil.",
             en: "We are **Cloud Native**. We use **Python** as our main engine, orchestrated on **AWS/GCP**. We integrate LLM models (GPT-4o/Claude) with your data via **RAG** for total precision. No fragile 'low-code' tools."
         },
         agent: {
@@ -129,8 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
             en: "An **AI Agent** is not just a chatbot. It's a 'digital employee' capable of reasoning, using tools (Excel, Email, CRMs), and executing complex tasks 24/7 without rest. Imagine having one working for you?"
         },
         human: {
-            es: "¡Claro! A veces es mejor hablar. Agenda 30 min con Santiago o Tomás aquí: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Agendar Llamada</a>",
-            en: "Sure! Sometimes talking is better. Book 30 mins with Santiago or Tomás here: <br><a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>📅 Book a Call</a>"
+            // ¡¡¡CAMBIA EL NUMERO AQUI ABAJO!!!
+            es: "¡Claro! Hablemos. Elige la opción que prefieras: <br>📅 <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>Agendar Llamada</a><br>💬 <a href='https://wa.me/5493515310485' target='_blank' style='color:#00ff88; font-weight:bold;'>Chat WhatsApp</a>",
+            en: "Sure! Let's talk. Choose what fits you best: <br>📅 <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>Book a Call</a><br>💬 <a href='https://wa.me/5493515310485' target='_blank' style='color:#00ff88; font-weight:bold;'>WhatsApp Chat</a>"
         }
     };
 
@@ -139,37 +160,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
 
     // Abrir/Cerrar
-    chatTrigger.addEventListener('click', () => {
-        chatWindow.style.display = 'flex';
-        chatTrigger.style.display = 'none';
-    });
+    if(chatTrigger && chatWindow) {
+        chatTrigger.addEventListener('click', () => {
+            chatWindow.style.display = 'flex';
+            chatTrigger.style.display = 'none';
+        });
 
-    closeBtn.addEventListener('click', () => {
-        chatWindow.style.display = 'none';
-        chatTrigger.style.display = 'flex';
-    });
+        closeBtn.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+            chatTrigger.style.display = 'flex';
+        });
+    }
 
     // Enviar mensaje
-    sendBtn.addEventListener('click', processUserMessage);
-    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processUserMessage(); });
+    if(sendBtn) {
+        sendBtn.addEventListener('click', processUserMessage);
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processUserMessage(); });
+    }
 
     // Click en opciones (botones dentro del chat)
-    chatBody.addEventListener('click', (e) => {
-        if (e.target.classList.contains('chat-opt-btn')) {
-            const action = e.target.getAttribute('data-action');
-            const text = e.target.innerText;
-            
-            // Simular mensaje usuario
-            addMessage(text, 'user');
-            
-            // Eliminar menú de opciones tras click
-            const menu = e.target.parentElement;
-            if (menu.classList.contains('chat-options')) menu.remove();
+    if(chatBody) {
+        chatBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('chat-opt-btn')) {
+                const action = e.target.getAttribute('data-action');
+                const text = e.target.innerText;
+                
+                // Simular mensaje usuario
+                addMessage(text, 'user');
+                
+                // Eliminar menú de opciones tras click
+                const menu = e.target.parentElement;
+                if (menu.classList.contains('chat-options')) menu.remove();
 
-            // Responder
-            botReply(action);
-        }
-    });
+                // Responder
+                botReply(action);
+            }
+        });
+    }
 
     function processUserMessage() {
         const rawText = chatInput.value.trim();
@@ -185,40 +212,41 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const normalizedText = rawText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-             // 🔹 CONFIRMACIONES
-        if (['si','yes','ok','dale','sure'].includes(normalizedText)) {
-            if (lastIntent === 'price' || lastIntent === 'free') {
-                addMessage(botResponses.human[currentLang], 'bot');
-                lastIntent = null;
-                setTimeout(showChatMenu, 800);
-                return;
+             // 🔹 CONFIRMACIONES (SI, DALE, OK)
+            if (['si','yes','ok','dale','sure','claro'].includes(normalizedText)) {
+                if (lastIntent === 'price' || lastIntent === 'free' || lastIntent === 'agent' || lastIntent === 'cases') {
+                    addMessage(botResponses.human[currentLang], 'bot');
+                    lastIntent = null;
+                    setTimeout(showChatMenu, 800);
+                    return;
+                }
             }
-        }
-            // Buscar coincidencia
+            
+            // Buscar coincidencia (RESPETA PRIORIDAD)
             const match = Object.entries(intents).find(([_, keywords]) => 
                 keywords.some(k => normalizedText.includes(k))
             );
 
             const detectedIntent = match ? match[0] : null;
 
-            
-        if (detectedIntent && botResponses[detectedIntent]) {
-            lastIntent = detectedIntent; // 🔹 GUARDAR CONTEXTO
-            addMessage(botResponses[detectedIntent][currentLang], 'bot');
+            if (detectedIntent && botResponses[detectedIntent]) {
+                lastIntent = detectedIntent; // 🔹 GUARDAR CONTEXTO
+                addMessage(botResponses[detectedIntent][currentLang], 'bot');
 
-            if (detectedIntent !== 'human') {
-                setTimeout(showChatMenu, 800);
+                // Si pidieron hablar con humano, no mostramos el menú de botones inmediatamente
+                if (detectedIntent !== 'human') {
+                    setTimeout(showChatMenu, 800);
+                }
+            } else {
+                const fallbackMsg = currentLang === 'es' 
+                    ? "No estoy seguro de haber entendido 🤔. Pero puedo ayudarte con **Precios**, **Tecnología** o agendar una **Llamada**."
+                    : "I'm not sure I got that 🤔. But I can help you with **Pricing**, **Tech**, or booking a **Call**.";
+                
+                addMessage(fallbackMsg, 'bot');
+                setTimeout(showChatMenu, 500);
             }
-        } else {
-            const fallbackMsg = currentLang === 'es' 
-                ? "No estoy seguro de haber entendido 🤔. Pero puedo ayudarte con **Precios**, **Tecnología** o agendar una **Llamada**."
-                : "I'm not sure I got that 🤔. But I can help you with **Pricing**, **Tech**, or booking a **Call**.";
-
-            addMessage(fallbackMsg, 'bot');
-            setTimeout(showChatMenu, 500);
-        }
-    }, 800);
-}
+        }, 800);
+    }
 
     function botReply(action) {
         showTyping();
@@ -235,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const msg = document.createElement('div');
         msg.className = `message ${type}`;
         
-        // ESTA ES LA MAGIA: Reemplaza **texto** por <strong>texto</strong>
+        // Reemplaza **texto** por <strong>texto</strong>
         const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         
         msg.innerHTML = formattedText; 
@@ -259,42 +287,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showTyping() {
-        typingIndicator.style.display = 'flex';
-        chatBody.scrollTop = chatBody.scrollHeight;
+        if(typingIndicator) {
+            typingIndicator.style.display = 'flex';
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
     }
 
     function hideTyping() {
-        typingIndicator.style.display = 'none';
+        if(typingIndicator) typingIndicator.style.display = 'none';
     }
 
     // ==========================================
-  // 5. ANIMACIONES AL SCROLLEAR Y NAVEGACIÓN
+    // 5. ANIMACIONES (REVEAL) & SCROLL SUAVE (NAV)
+    // ==========================================
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     
-// --- LÓGICA DE NAVEGACIÓN MEJORADA (LOGO + SECCIONES) ---
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        
-        // CASO 1: Si es el Logo (href="#") -> Ir arriba de todo
-        if (targetId === '#') {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        } 
-        // CASO 2: Si es una sección (href="#packs") -> Ir a la sección
-        else {
-            const target = document.querySelector(targetId);
-            if (target) { 
-                target.scrollIntoView({ behavior: 'smooth' }); 
+    // Smooth Scroll con corrección
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const target = document.querySelector(targetId);
+                if (target) target.scrollIntoView({ behavior: 'smooth' }); 
             }
-        }
+        });
     });
-  });
+
 });
