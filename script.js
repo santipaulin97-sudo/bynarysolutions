@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             en: "Our **Free Automation** is a real 1-week project (e.g., reading invoices, sending emails). No cost, just to prove our quality. Interested?"
         },
         price: {
-            es: "Tenemos 2 modelos: <br>1. **Proyecto Puntual:** Desde $300 USD.<br>2. **Mantenimiento Mensual:** Para soporte continuo.<br>¿Te gustaría agendar una llamada para cotizar?",
-            en: "We have 2 models: <br>1. **One-off Project:** Starts at $300 USD.<br>2. **Monthly Retainer:** For continuous support.<br>Would you like to book a call for a quote?"
+            es: "Manejamos dos niveles principales: <br>1. **Standard ($400 USD/mes):** Incluye mantenimiento, monitoreo 24/7 de tus bots y ajustes menores. Ideal para mantener la estabilidad.<br>2. **Premium (Desde $800 USD/mes):** Desarrollo continuo, nuevos Agentes de IA a medida y Data Engineering complejo.<br>¿Buscas mantener o escalar?",
+            en: "We offer two main tiers: <br>1. **Standard ($400 USD/mo):** Includes maintenance, 24/7 bot monitoring, and minor tweaks. Ideal for stability.<br>2. **Premium (From $800 USD/mo):** Continuous development, new custom AI Agents, and complex Data Engineering.<br>Are you looking to maintain or scale?"
         },
         payments: {
             es: "Aceptamos **Transferencia bancaria (ARS/USD)**, **Mercado Pago**, Crypto (USDT) y plataformas como **Deel o Payoneer**. Emitimos factura internacional.",
