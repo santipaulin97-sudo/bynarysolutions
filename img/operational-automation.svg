@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">Operational automation flow</title>
+  <desc id="desc">ERP, WMS and API systems feeding an automation engine that creates alerts and dashboards.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b111b"/>
+      <stop offset="1" stop-color="#070a0f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f6bff"/>
+      <stop offset="1" stop-color="#6fdcff"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="480" rx="30" fill="url(#bg)"/>
+  <g stroke="#223044" stroke-width="2" fill="none" opacity=".9">
+    <path d="M190 125H365"/><path d="M190 240H365"/><path d="M190 355H365"/>
+    <path d="M535 240H705"/><path d="M450 325V385"/>
+  </g>
+  <g fill="#0f1723" stroke="#26364a" stroke-width="2">
+    <rect x="65" y="80" width="125" height="90" rx="18"/>
+    <rect x="65" y="195" width="125" height="90" rx="18"/>
+    <rect x="65" y="310" width="125" height="90" rx="18"/>
+    <rect x="365" y="160" width="170" height="165" rx="28" stroke="url(#accent)"/>
+    <rect x="705" y="145" width="130" height="85" rx="18"/>
+    <rect x="705" y="265" width="130" height="85" rx="18"/>
+    <rect x="375" y="385" width="150" height="58" rx="18"/>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#f8fafc" text-anchor="middle">
+    <text x="127" y="118" font-size="18" font-weight="700">ERP</text>
+    <text x="127" y="145" font-size="12" fill="#8f9bab">Orders · Finance</text>
+    <text x="127" y="233" font-size="18" font-weight="700">WMS</text>
+    <text x="127" y="260" font-size="12" fill="#8f9bab">Inventory · SLA</text>
+    <text x="127" y="348" font-size="18" font-weight="700">APIs</text>
+    <text x="127" y="375" font-size="12" fill="#8f9bab">CRM · Partners</text>
+    <text x="450" y="220" font-size="21" font-weight="700">AUTOMATION</text>
+    <text x="450" y="249" font-size="21" font-weight="700">ENGINE</text>
+    <text x="450" y="279" font-size="12" fill="#8f9bab">Rules · Workflows · Controls</text>
+    <text x="770" y="182" font-size="17" font-weight="700">ALERTS</text>
+    <text x="770" y="207" font-size="11" fill="#8f9bab">Exceptions</text>
+    <text x="770" y="302" font-size="17" font-weight="700">DASHBOARDS</text>
+    <text x="770" y="327" font-size="11" fill="#8f9bab">Real-time visibility</text>
+    <text x="450" y="420" font-size="13" font-weight="700">AUDIT TRAIL</text>
+  </g>
+  <g fill="#6fdcff" filter="url(#softGlow)">
+    <circle cx="190" cy="125" r="4"/><circle cx="190" cy="240" r="4"/><circle cx="190" cy="355" r="4"/>
+    <circle cx="365" cy="125" r="4"/><circle cx="365" cy="240" r="4"/><circle cx="365" cy="355" r="4"/>
+    <circle cx="535" cy="240" r="4"/><circle cx="705" cy="240" r="4"/><circle cx="450" cy="325" r="4"/><circle cx="450" cy="385" r="4"/>
+  </g>
+  <g stroke="url(#accent)" stroke-width="4" stroke-linecap="round">
+    <path d="M745 180l16 16 31-36" fill="none"/>
+    <path d="M738 319h12v-25h12v25h12v-40h12v40h12" fill="none"/>
+  </g>
+</svg>
