@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 1. CONFIGURACIÓN GLOBAL & IDIOMA
     // ==========================================
+
     let currentLang = 'es';
     let lastIntent = null;
+
     const langToggle = document.getElementById('lang-switch');
     const langOptions = document.querySelectorAll('.lang-opt');
 
@@ -17,306 +19,773 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatTrigger = document.getElementById('chat-trigger');
     const typingIndicator = document.getElementById('typing-indicator');
 
-    // Lógica de Cambio de Idioma
-    if(langToggle) {
+
+    // ==========================================
+    // CAMBIO DE IDIOMA
+    // ==========================================
+
+    if (langToggle) {
+
         langToggle.addEventListener('click', (e) => {
+
             const target = e.target.closest('.lang-opt');
+
             if (!target || target.classList.contains('active')) return;
 
             langOptions.forEach(opt => opt.classList.remove('active'));
             target.classList.add('active');
+
             currentLang = target.getAttribute('data-value');
 
             // Actualizar textos estáticos
             document.querySelectorAll('[data-es]').forEach(el => {
+
                 const text = el.getAttribute(`data-${currentLang}`);
+
                 if (text) {
-                    if (el.tagName === 'INPUT') el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
-                    else el.innerHTML = text;
+
+                    if (el.tagName === 'INPUT') {
+
+                        el.placeholder =
+                            el.getAttribute(`data-${currentLang}-placeholder`);
+
+                    } else {
+
+                        el.innerHTML = text;
+
+                    }
+
                 }
+
             });
-            
-            // Actualizar placeholder del chat si existe
-            if(chatInput) chatInput.placeholder = chatInput.getAttribute(`data-${currentLang}-placeholder`);
+
+            // Placeholder del chat
+            if (chatInput) {
+                chatInput.placeholder =
+                    chatInput.getAttribute(`data-${currentLang}-placeholder`);
+            }
+
         });
+
     }
 
+
     // ==========================================
-    // 2. EFECTO TYPING (HERO SECTION)
+    // 2. EFECTO TYPING - HERO
     // ==========================================
+
     const typingText = document.getElementById('typing-text');
+
     const phrases = {
-        es: ["Dashboards en tiempo real.", "Reduzca costos operativos.", "Automatice tareas repetitivas.", "Integración de IA con GPT-4o.", "Ingeniería de datos escalable."],
-        en: ["Real-time dashboards.", "Reduce operational costs.", "Automate repetitive tasks.", "AI Integration with GPT-4o.", "Scalable data engineering."]
+
+        es: [
+            "Automatice procesos operativos.",
+            "Conecte sus sistemas.",
+            "Obtenga visibilidad en tiempo real.",
+            "Reduzca trabajo manual.",
+            "Convierta datos en decisiones."
+        ],
+
+        en: [
+            "Automate operational workflows.",
+            "Connect your existing systems.",
+            "Gain real-time visibility.",
+            "Reduce manual work.",
+            "Turn data into decisions."
+        ]
+
     };
 
-    let phraseIndex = 0, charIndex = 0, isDeleting = false, typingSpeed = 100;
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+
 
     function typeEffect() {
+
         if (!typingText) return;
+
         const currentPhrases = phrases[currentLang];
+
+        // Protección al cambiar de idioma
+        if (phraseIndex >= currentPhrases.length) {
+            phraseIndex = 0;
+        }
+
         const currentFullText = currentPhrases[phraseIndex];
 
+
         if (isDeleting) {
-            typingText.textContent = currentFullText.substring(0, charIndex - 1);
-            charIndex--; typingSpeed = 50;
+
+            typingText.textContent =
+                currentFullText.substring(0, charIndex - 1);
+
+            charIndex--;
+            typingSpeed = 50;
+
         } else {
-            typingText.textContent = currentFullText.substring(0, charIndex + 1);
-            charIndex++; typingSpeed = 100;
+
+            typingText.textContent =
+                currentFullText.substring(0, charIndex + 1);
+
+            charIndex++;
+            typingSpeed = 100;
+
         }
+
 
         if (!isDeleting && charIndex === currentFullText.length) {
-            isDeleting = true; typingSpeed = 2000;
+
+            isDeleting = true;
+            typingSpeed = 1800;
+
         } else if (isDeleting && charIndex === 0) {
-            isDeleting = false; phraseIndex = (phraseIndex + 1) % currentPhrases.length; typingSpeed = 500;
+
+            isDeleting = false;
+
+            phraseIndex =
+                (phraseIndex + 1) % currentPhrases.length;
+
+            typingSpeed = 400;
+
         }
+
+
         setTimeout(typeEffect, typingSpeed);
+
     }
+
     typeEffect();
 
+
     // ==========================================
-    // 3. CEREBRO DEL BOT (LÓGICA CORREGIDA)
+    // 3. INTENCIONES DEL BOT
     // ==========================================
-    
+
     const intents = {
-       // Contacto Directo
-       human: ['humano','persona','alguien','contacto','hablar','llamada','call','reunion','meeting','zoom','meet','calendly','agendar','charlar', 'whatsapp', 'phone', 'telefono'],
-       
-       // Precios
-       price: ['precio','precios','price','prices','cost','costs','costo','costos','cuanto sale','cuanto cuesta','rate','rates','tarifa','tarifas','planes','plan','valor','fee','fees','$$','$','usd'],
-       
-       // Casos de Uso (Reconciliation, Vendors, Reporting)
-       cases: ['casos','case','cases','ejemplos','example','examples','experiencia','clientes','exito','resultados','portfolio','proyectos', 'reconciliation', 'conciliacion', 'vendor', 'proveedor', 'suppliers', 'cierre', 'closing', 'report', 'reporte'],
-       
-       // Gratis
-       free: ['gratis','free','free trial','trial','prueba','demo','test','sin costo','regalo','probar','sample'],
-       
-       // Tecnología
-       tech: ['tech','tecnologia','tecnologías','stack','tools','herramientas','python','aws','gcp','google','cloud','sql','etl','lenguaje','codigo','programacion'],
-       
-       // Agentes / Definición
-       agent: ['agente','agentes','agent','agents','bot','bots','ia','inteligencia','artificial','gpt','llm','que es un agente','what is an agent'],
-       
-       // Pagos (Métodos + Bank/Card genérico)
-       payments: ['pago','pagos','pagar','payment','payments','pay','formas de pago','metodo','metodos','transferencia','factura','invoice','usdt','crypto','payoneer','deel','mercado pago', 'bank', 'banco', 'card', 'tarjeta', 'credit', 'credito'],
-       
-       // Seguridad
-       security: ['seguridad','security','datos','data','privacy','privacidad','confidencial','nda','legal','contrato','proteccion','safe','secure'],
-       
-       // Tiempo
-       time: ['tiempo','time','timing','tarda','tardan','demora','demoran','plazo','dias','semanas','meses','how long','when','cuando'],
-       
-       // Saludos
-       greetings: ['hola','hello','hi','hey','buen dia','buenos dias','buenas','start','inicio','arrancar','empezar','info','hey bot']
+
+        // Diagnóstico Operativo
+        assessment: [
+            'diagnostico',
+            'assessment',
+            'evaluacion',
+            'evaluar',
+            'analizar proceso',
+            'proceso operativo',
+            'oportunidad',
+            'mejorar proceso'
+        ],
+
+
+        // Soluciones
+        solutions: [
+            'soluciones',
+            'solution',
+            'solutions',
+            'automatizacion',
+            'automation',
+            'software',
+            'integracion',
+            'integraciones',
+            'integration',
+            'dashboard',
+            'dashboards',
+            'operaciones',
+            'operations'
+        ],
+
+
+        // Casos de Uso
+        cases: [
+            'casos',
+            'case',
+            'cases',
+            'ejemplos',
+            'example',
+            'examples',
+            'proyectos',
+            'portfolio',
+            'reconciliation',
+            'conciliacion',
+            'report',
+            'reporte',
+            'inventario',
+            'inventory',
+            'erp',
+            'wms'
+        ],
+
+
+        // Contacto
+        human: [
+            'humano',
+            'persona',
+            'contacto',
+            'hablar',
+            'llamada',
+            'call',
+            'meeting',
+            'reunion',
+            'zoom',
+            'meet',
+            'calendly',
+            'agendar',
+            'whatsapp',
+            'phone',
+            'telefono'
+        ],
+
+
+        // Tecnología
+        tech: [
+            'tech',
+            'tecnologia',
+            'stack',
+            'tools',
+            'herramientas',
+            'python',
+            'aws',
+            'gcp',
+            'cloud',
+            'sql',
+            'etl',
+            'api',
+            'apis',
+            'codigo',
+            'programacion'
+        ],
+
+
+        // Seguridad
+        security: [
+            'seguridad',
+            'security',
+            'privacy',
+            'privacidad',
+            'confidencial',
+            'nda',
+            'proteccion',
+            'secure'
+        ],
+
+
+        // Tiempo / implementación
+        time: [
+            'tiempo',
+            'time',
+            'timing',
+            'tarda',
+            'demora',
+            'plazo',
+            'dias',
+            'semanas',
+            'meses',
+            'how long',
+            'cuando'
+        ],
+
+
+        // Precios
+        price: [
+            'precio',
+            'precios',
+            'price',
+            'pricing',
+            'cost',
+            'costs',
+            'costo',
+            'cuanto sale',
+            'cuanto cuesta',
+            'tarifa',
+            'fee',
+            'usd'
+        ],
+
+
+        // Saludos
+        greetings: [
+            'hola',
+            'hello',
+            'hi',
+            'hey',
+            'buen dia',
+            'buenos dias',
+            'buenas',
+            'inicio',
+            'start',
+            'info'
+        ]
+
     };
 
-    // Respuestas del Bot
+
+    // ==========================================
+    // 4. RESPUESTAS DEL BOT
+    // ==========================================
+
     const botResponses = {
+
         greetings: {
-            es: "¡Hola! Soy BYN Bot 🤖. Estoy aquí para ayudarte a escalar tu negocio. Pregúntame sobre **precios**, **qué es un agente IA** o nuestra **prueba gratis**.",
-            en: "Hi! I'm BYN Bot 🤖. I'm here to help you scale your business. Ask me about **pricing**, **what an AI agent is**, or our **free trial**."
+
+            es: "¡Hola! Soy BYN Bot 🤖. Puedo ayudarte a conocer nuestras **soluciones**, explorar **casos de uso** o solicitar un **diagnóstico operativo**.",
+
+            en: "Hi! I'm BYN Bot 🤖. I can help you explore our **solutions**, review **use cases**, or request an **operational assessment**."
+
         },
-        free: {
-            es: "Nuestra **Automatización Gratis** es un proyecto real de 1 semana (ej. leer facturas, enviar emails). Sin costo, para que pruebes nuestra calidad. ¿Te interesa?",
-            en: "Our **Free Automation** is a real 1-week project (e.g., reading invoices, sending emails). No cost, just to prove our quality. Interested?"
+
+
+        assessment: {
+
+            es: "Nuestro **Diagnóstico Operativo** comienza analizando un proceso concreto de su empresa. Identificamos tareas manuales, cuellos de botella, errores y oportunidades donde software, automatización o mejores datos pueden generar impacto. Si encontramos una oportunidad clara, diseñamos una propuesta de solución.",
+
+            en: "Our **Operational Assessment** starts by reviewing one specific business workflow. We identify manual work, bottlenecks, errors and opportunities where software, automation or better data visibility can create impact. If we find a clear opportunity, we design a proposed solution."
+
         },
-        price: {
-            es: "Manejamos dos niveles principales: <br>1. **Standard ($400 USD/mes):** Incluye mantenimiento, monitoreo 24/7 de tus bots y ajustes menores. Ideal para mantener la estabilidad.<br>2. **Premium (Desde $700 USD/mes):** Desarrollo continuo, nuevos Agentes de IA a medida y Data Engineering complejo.<br>¿Buscas mantener o escalar?",
-            en: "We offer two main tiers: <br>1. **Standard ($400 USD/mo):** Includes maintenance, 24/7 bot monitoring, and minor tweaks. Ideal for stability.<br>2. **Premium (From $700 USD/mo):** Continuous development, new custom AI Agents, and complex Data Engineering.<br>Are you looking to maintain or scale?"
+
+
+        solutions: {
+
+            es: "Trabajamos principalmente en tres áreas:<br><br>⚙️ **Automatización Operativa:** procesos manuales, alertas y controles.<br>🔌 **Software e Integraciones:** conectamos ERP, WMS, CRM, APIs y herramientas internas.<br>📊 **Data & Analytics:** dashboards, pipelines y reporting operativo.",
+
+            en: "We focus on three main areas:<br><br>⚙️ **Operational Automation:** manual workflows, alerts and controls.<br>🔌 **Software & Integrations:** connecting ERP, WMS, CRM, APIs and internal tools.<br>📊 **Data & Analytics:** dashboards, pipelines and operational reporting."
+
         },
-        payments: {
-            es: "Aceptamos **Transferencia bancaria (ARS/USD)**, **Mercado Pago**, Crypto (USDT) y plataformas como **Deel o Payoneer**. Emitimos factura internacional.",
-            en: "We accept **Bank Transfers (ARS/USD)**, **Mercado Pago**, Crypto (USDT), and platforms like **Deel or Payoneer**. International invoicing available."
-        },
-        time: {
-            es: "Somos rápidos. La automatización gratuita toma **3-5 días**. Proyectos complejos de Data Engineering toman de **2 a 4 semanas**.",
-            en: "We are fast. The free automation takes **3-5 days**. Complex Data Engineering projects take **2-4 weeks**."
-        },
+
+
         cases: {
-            es: "Nuestros casos estrella: <br>1. **Conciliación Bancaria y de Tarjetas:** 100% automática. <br>2. **Proveedores (Vendors):** Conciliación automática de cuentas corrientes.<br>3. **Reportes en Tiempo Real:** Para cierres económicos sin estrés.<br>Reducimos costos y tiempos operativos.",
-            en: "Our star cases: <br>1. **Bank & Card Reconciliation:** 100% automated. <br>2. **Vendors/Suppliers:** Automatic account reconciliation.<br>3. **Real-Time Reporting:** For stress-free economic closings.<br>We reduce operating costs and time."
+
+            es: "Algunos ejemplos de soluciones que podemos desarrollar:<br><br>• Monitoreo de inventario y órdenes<br>• Automatización de reportes operativos<br>• Integraciones ERP / WMS / CRM<br>• Seguimiento de presupuesto vs. gasto real<br>• Dashboards de proyectos y operaciones<br>• Conciliaciones y controles automatizados",
+
+            en: "Some examples of solutions we can build:<br><br>• Inventory and order monitoring<br>• Automated operational reporting<br>• ERP / WMS / CRM integrations<br>• Budget vs. actual tracking<br>• Project and operations dashboards<br>• Automated reconciliation and controls"
+
         },
+
+
+        price: {
+
+            es: "Cada solución tiene un **alcance a medida**. El costo depende de la complejidad del proceso, integraciones necesarias y nivel de desarrollo. Primero entendemos la operación y luego proponemos el alcance adecuado.",
+
+            en: "Each solution has a **custom scope**. Pricing depends on workflow complexity, required integrations and development effort. We first understand the operation and then propose the right scope."
+
+        },
+
+
+        time: {
+
+            es: "Los tiempos dependen del alcance. Una automatización o integración puntual puede resolverse rápidamente, mientras que una plataforma operativa completa requiere un desarrollo por etapas. Definimos tiempos y entregables después del diagnóstico inicial.",
+
+            en: "Timelines depend on scope. A focused automation or integration can be delivered quickly, while a full operational platform is usually developed in stages. We define timing and deliverables after the initial assessment."
+
+        },
+
+
         security: {
-            es: "Tu seguridad es prioridad. Firmamos **NDA (Acuerdo de Confidencialidad)**. Usamos infraestructura encriptada en AWS/GCP. Tus datos nunca se comparten.",
-            en: "Security is priority. We sign an **NDA**. We use encrypted infrastructure on AWS/GCP. Your data is never shared."
+
+            es: "La seguridad y confidencialidad forman parte del diseño de cada solución. Podemos trabajar bajo **NDA**, definir accesos específicos e integrar la solución con la infraestructura existente de la empresa.",
+
+            en: "Security and confidentiality are part of each solution's design. We can work under an **NDA**, define specific access controls and integrate with your company's existing infrastructure."
+
         },
+
+
         tech: {
-            es: "Somos **Cloud Native**. Usamos **Python** como motor principal, orquestado en **AWS/GCP**. Integramos modelos LLM (GPT-4o/Claude) con tus datos vía **RAG** para precisión total. Nada de 'low-code' frágil.",
-            en: "We are **Cloud Native**. We use **Python** as our main engine, orchestrated on **AWS/GCP**. We integrate LLM models (GPT-4o/Claude) with your data via **RAG** for total precision. No fragile 'low-code' tools."
+
+            es: "Trabajamos con tecnologías modernas de **software, datos, cloud y automatización**. Utilizamos Python, SQL, APIs, infraestructura cloud y herramientas de IA cuando generan valor operativo real.",
+
+            en: "We work with modern **software, data, cloud and automation technologies**. We use Python, SQL, APIs, cloud infrastructure and AI when it creates real operational value."
+
         },
-        agent: {
-            es: "Un **Agente IA** no es un simple chatbot. Es un 'empleado digital' capaz de razonar, usar herramientas (Excel, Email, CRMs) y ejecutar tareas complejas 24/7 sin descanso. ¿Te imaginas tener uno trabajando para ti?",
-            en: "An **AI Agent** is not just a chatbot. It's a 'digital employee' capable of reasoning, using tools (Excel, Email, CRMs), and executing complex tasks 24/7 without rest. Imagine having one working for you?"
-        },
+
+
         human: {
-            // ¡¡¡CAMBIA EL NUMERO AQUI ABAJO!!!
-            es: "¡Claro! Hablemos. Elige la opción que prefieras: <br>📅 <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>Agendar Llamada</a><br>💬 <a href='https://wa.me/5493515310485' target='_blank' style='color:#00ff88; font-weight:bold;'>Chat WhatsApp</a>",
-            en: "Sure! Let's talk. Choose what fits you best: <br>📅 <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>Book a Call</a><br>💬 <a href='https://wa.me/5493515310485' target='_blank' style='color:#00ff88; font-weight:bold;'>WhatsApp Chat</a>"
+
+            es: "¡Claro! Hablemos.<br><br>📅 <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>Agendar una llamada</a><br><br>💬 <a href='https://wa.me/5493515310485' target='_blank' style='color:#00ff88; font-weight:bold;'>Hablar por WhatsApp</a>",
+
+            en: "Sure! Let's talk.<br><br>📅 <a href='https://calendly.com/santipaulin97/30min' target='_blank' style='color:#00E0FF; font-weight:bold;'>Book a Call</a><br><br>💬 <a href='https://wa.me/5493515310485' target='_blank' style='color:#00ff88; font-weight:bold;'>WhatsApp Chat</a>"
+
         }
+
     };
 
+
     // ==========================================
-    // 4. LÓGICA DE INTERACCIÓN DEL CHAT
+    // 5. ABRIR / CERRAR CHAT
     // ==========================================
 
-    // Abrir/Cerrar
-    if(chatTrigger && chatWindow) {
+    if (chatTrigger && chatWindow) {
+
         chatTrigger.addEventListener('click', () => {
+
             chatWindow.style.display = 'flex';
             chatTrigger.style.display = 'none';
+
         });
 
-        closeBtn.addEventListener('click', () => {
-            chatWindow.style.display = 'none';
-            chatTrigger.style.display = 'flex';
-        });
-    }
 
-    // Enviar mensaje
-    if(sendBtn) {
-        sendBtn.addEventListener('click', processUserMessage);
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processUserMessage(); });
-    }
+        if (closeBtn) {
 
-    // Click en opciones (botones dentro del chat)
-    if(chatBody) {
-        chatBody.addEventListener('click', (e) => {
-            if (e.target.classList.contains('chat-opt-btn')) {
-                const action = e.target.getAttribute('data-action');
-                const text = e.target.innerText;
-                
-                // Simular mensaje usuario
-                addMessage(text, 'user');
-                
-                // Eliminar menú de opciones tras click
-                const menu = e.target.parentElement;
-                if (menu.classList.contains('chat-options')) menu.remove();
+            closeBtn.addEventListener('click', () => {
 
-                // Responder
-                botReply(action);
-            }
-        });
-    }
+                chatWindow.style.display = 'none';
+                chatTrigger.style.display = 'flex';
 
-    function processUserMessage() {
-        const rawText = chatInput.value.trim();
-        if (!rawText) return;
+            });
 
-        addMessage(rawText, 'user');
-        chatInput.value = '';
-        
-        showTyping();
-
-        setTimeout(() => {
-            hideTyping();
-            
-            const normalizedText = rawText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-             // 🔹 CONFIRMACIONES (SI, DALE, OK)
-            if (['si','yes','ok','dale','sure','claro'].includes(normalizedText)) {
-                if (lastIntent === 'price' || lastIntent === 'free' || lastIntent === 'agent' || lastIntent === 'cases') {
-                    addMessage(botResponses.human[currentLang], 'bot');
-                    lastIntent = null;
-                    setTimeout(showChatMenu, 800);
-                    return;
-                }
-            }
-            
-            // Buscar coincidencia (RESPETA PRIORIDAD)
-            const match = Object.entries(intents).find(([_, keywords]) => 
-                keywords.some(k => normalizedText.includes(k))
-            );
-
-            const detectedIntent = match ? match[0] : null;
-
-            if (detectedIntent && botResponses[detectedIntent]) {
-                lastIntent = detectedIntent; // 🔹 GUARDAR CONTEXTO
-                addMessage(botResponses[detectedIntent][currentLang], 'bot');
-
-                // Si pidieron hablar con humano, no mostramos el menú de botones inmediatamente
-                if (detectedIntent !== 'human') {
-                    setTimeout(showChatMenu, 800);
-                }
-            } else {
-                const fallbackMsg = currentLang === 'es' 
-                    ? "No estoy seguro de haber entendido 🤔. Pero puedo ayudarte con **Precios**, **Tecnología** o agendar una **Llamada**."
-                    : "I'm not sure I got that 🤔. But I can help you with **Pricing**, **Tech**, or booking a **Call**.";
-                
-                addMessage(fallbackMsg, 'bot');
-                setTimeout(showChatMenu, 500);
-            }
-        }, 800);
-    }
-
-    function botReply(action) {
-        showTyping();
-        setTimeout(() => {
-            hideTyping();
-            if (botResponses[action]) {
-                addMessage(botResponses[action][currentLang], 'bot');
-                if (action !== 'human') setTimeout(showChatMenu, 600);
-            }
-        }, 600);
-    }
-
-    function addMessage(text, type) {
-        const msg = document.createElement('div');
-        msg.className = `message ${type}`;
-        
-        // Reemplaza **texto** por <strong>texto</strong>
-        const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        
-        msg.innerHTML = formattedText; 
-        chatBody.insertBefore(msg, typingIndicator); 
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    function showChatMenu() {
-        if(document.querySelector('.chat-options-dynamic')) return; // Evitar duplicados
-
-        const menuDiv = document.createElement('div');
-        menuDiv.className = 'chat-options chat-options-dynamic';
-        menuDiv.innerHTML = `
-            <button class="chat-opt-btn" data-action="free">🎁 ${currentLang === 'es' ? 'Prueba Gratis' : 'Free Trial'}</button>
-            <button class="chat-opt-btn" data-action="price">💰 ${currentLang === 'es' ? 'Precios' : 'Pricing'}</button>
-            <button class="chat-opt-btn" data-action="tech">🚀 ${currentLang === 'es' ? 'Tecnología' : 'Tech'}</button>
-            <button class="chat-opt-btn" data-action="human">👤 ${currentLang === 'es' ? 'Agendar' : 'Book Call'}</button>
-        `;
-        chatBody.insertBefore(menuDiv, typingIndicator);
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    function showTyping() {
-        if(typingIndicator) {
-            typingIndicator.style.display = 'flex';
-            chatBody.scrollTop = chatBody.scrollHeight;
         }
+
     }
 
-    function hideTyping() {
-        if(typingIndicator) typingIndicator.style.display = 'none';
-    }
+// ==========================================
+// ENVIAR MENSAJE
+// ==========================================
 
-    // ==========================================
-    // 5. ANIMACIONES (REVEAL) & SCROLL SUAVE (NAV)
-    // ==========================================
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    
-    // Smooth Scroll con corrección
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                const target = document.querySelector(targetId);
-                if (target) target.scrollIntoView({ behavior: 'smooth' }); 
-            }
-        });
+if (sendBtn && chatInput) {
+
+    sendBtn.addEventListener('click', processUserMessage);
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            processUserMessage();
+        }
     });
 
-});
+}
+
+
+// ==========================================
+// CLICK EN OPCIONES DEL CHAT
+// ==========================================
+
+if (chatBody) {
+
+    chatBody.addEventListener('click', (e) => {
+
+        if (e.target.classList.contains('chat-opt-btn')) {
+
+            const action = e.target.getAttribute('data-action');
+            const text = e.target.innerText;
+
+            // Mostrar opción seleccionada como mensaje del usuario
+            addMessage(text, 'user');
+
+            // Eliminar el menú usado
+            const menu = e.target.parentElement;
+
+            if (menu && menu.classList.contains('chat-options')) {
+                menu.remove();
+            }
+
+            // Responder según acción
+            botReply(action);
+
+        }
+
+    });
+
+}
+
+
+// ==========================================
+// PROCESAR MENSAJE ESCRITO
+// ==========================================
+
+function processUserMessage() {
+
+    if (!chatInput) return;
+
+    const rawText = chatInput.value.trim();
+
+    if (!rawText) return;
+
+    addMessage(rawText, 'user');
+
+    chatInput.value = '';
+
+    showTyping();
+
+
+    setTimeout(() => {
+
+        hideTyping();
+
+        const normalizedText = rawText
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+
+
+        // ======================================
+        // CONFIRMACIONES
+        // ======================================
+
+        if (
+            ['si', 'yes', 'ok', 'dale', 'sure', 'claro', 'perfecto'].includes(normalizedText)
+        ) {
+
+            if (
+                lastIntent === 'assessment' ||
+                lastIntent === 'solutions' ||
+                lastIntent === 'cases' ||
+                lastIntent === 'price'
+            ) {
+
+                addMessage(botResponses.human[currentLang], 'bot');
+
+                lastIntent = null;
+
+                return;
+
+            }
+
+        }
+
+
+        // ======================================
+        // DETECTAR INTENCIÓN
+        // ======================================
+
+        const match = Object.entries(intents).find(([_, keywords]) =>
+            keywords.some(keyword =>
+                normalizedText.includes(
+                    keyword
+                        .toLowerCase()
+                        .normalize("NFD")
+                        .replace(/[\u0300-\u036f]/g, "")
+                )
+            )
+        );
+
+
+        const detectedIntent = match ? match[0] : null;
+
+
+        // ======================================
+        // RESPUESTA
+        // ======================================
+
+        if (detectedIntent && botResponses[detectedIntent]) {
+
+            lastIntent = detectedIntent;
+
+            addMessage(
+                botResponses[detectedIntent][currentLang],
+                'bot'
+            );
+
+
+            // No mostrar menú si ya pidió contacto
+            if (detectedIntent !== 'human') {
+
+                setTimeout(showChatMenu, 700);
+
+            }
+
+        } else {
+
+            const fallbackMsg =
+                currentLang === 'es'
+
+                    ? "No estoy seguro de haber entendido 🤔. Puedo ayudarte con nuestro **Diagnóstico Operativo**, nuestras **Soluciones**, **Casos de Uso** o puedes **hablar con nosotros**."
+
+                    : "I'm not sure I understood 🤔. I can help you with our **Operational Assessment**, **Solutions**, **Use Cases**, or you can **talk to us**.";
+
+
+            addMessage(fallbackMsg, 'bot');
+
+            setTimeout(showChatMenu, 500);
+
+        }
+
+    }, 700);
+
+}
+
+
+// ==========================================
+// RESPUESTA A BOTONES
+// ==========================================
+
+function botReply(action) {
+
+    showTyping();
+
+    setTimeout(() => {
+
+        hideTyping();
+
+        if (botResponses[action]) {
+
+            lastIntent = action;
+
+            addMessage(
+                botResponses[action][currentLang],
+                'bot'
+            );
+
+
+            if (action !== 'human') {
+
+                setTimeout(showChatMenu, 600);
+
+            }
+
+        }
+
+    }, 600);
+
+}
+
+
+// ==========================================
+// AGREGAR MENSAJE AL CHAT
+// ==========================================
+
+function addMessage(text, type) {
+
+    if (!chatBody) return;
+
+    const msg = document.createElement('div');
+
+    msg.className = `message ${type}`;
+
+
+    // Convierte **texto** en negrita
+    const formattedText = text.replace(
+        /\*\*(.*?)\*\*/g,
+        '<strong>$1</strong>'
+    );
+
+
+    msg.innerHTML = formattedText;
+
+
+    if (typingIndicator) {
+
+        chatBody.insertBefore(msg, typingIndicator);
+
+    } else {
+
+        chatBody.appendChild(msg);
+
+    }
+
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+}
+
+
+// ==========================================
+// MENÚ DINÁMICO
+// ==========================================
+
+function showChatMenu() {
+
+    if (!chatBody) return;
+
+    // Evitar menús duplicados
+    if (document.querySelector('.chat-options-dynamic')) return;
+
+
+    const menuDiv = document.createElement('div');
+
+    menuDiv.className =
+        'chat-options chat-options-dynamic';
+
+
+    menuDiv.innerHTML = `
+
+        <button
+            class="chat-opt-btn"
+            data-action="assessment">
+            ⚙️ ${
+                currentLang === 'es'
+                    ? 'Diagnóstico Operativo'
+                    : 'Operational Assessment'
+            }
+        </button>
+
+        <button
+            class="chat-opt-btn"
+            data-action="solutions">
+            🚀 ${
+                currentLang === 'es'
+                    ? 'Ver Soluciones'
+                    : 'Explore Solutions'
+            }
+        </button>
+
+        <button
+            class="chat-opt-btn"
+            data-action="cases">
+            📊 ${
+                currentLang === 'es'
+                    ? 'Casos de Uso'
+                    : 'Use Cases'
+            }
+        </button>
+
+        <button
+            class="chat-opt-btn"
+            data-action="human">
+            👤 ${
+                currentLang === 'es'
+                    ? 'Hablar con Nosotros'
+                    : 'Talk to Us'
+            }
+        </button>
+
+    `;
+
+
+    if (typingIndicator) {
+
+        chatBody.insertBefore(
+            menuDiv,
+            typingIndicator
+        );
+
+    } else {
+
+        chatBody.appendChild(menuDiv);
+
+    }
+
+
+    chatBody.scrollTop =
+        chatBody.scrollHeight;
+
+}
+
+
+// ==========================================
+// INDICADOR DE ESCRITURA
+// ==========================================
+
+function showTyping() {
+
+    if (typingIndicator) {
+
+        typingIndicator.style.display = 'flex';
+
+        if (chatBody) {
+            chatBody.scrollTop =
+                chatBody.scrollHeight;
+        }
+
+    }
+
+}
+
+
+function hideTyping() {
+
+    if (typingIndicator) {
+
+        typingIndicator.style.display = 'none';
+
+    }
+
+}
