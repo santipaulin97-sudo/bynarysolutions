@@ -4,7 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>BYNARY Solutions | IA, Datos & Automatización Operativa</title>
+    <title>BYNARY Solutions | Software, Automatización & Datos</title>
+    <meta name="description" content="BYNARY Solutions construye software interno, automatizaciones, integraciones y dashboards para equipos operativos en USA, LATAM y Europa.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#070a0f">
+    <link rel="canonical" href="https://santipaulin97-sudo.github.io/bynarysolutions/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BYNARY Solutions">
+    <meta property="og:title" content="BYNARY Solutions | Software & Automation for Operational Teams">
+    <meta property="og:description" content="Custom internal software, workflow automation, integrations and operational dashboards built around your existing systems.">
+    <meta property="og:url" content="https://santipaulin97-sudo.github.io/bynarysolutions/">
+    <meta property="og:image" content="https://santipaulin97-sudo.github.io/bynarysolutions/img/bynary.jpeg">
+    <meta property="og:image:alt" content="BYNARY Solutions">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BYNARY Solutions | Software & Automation for Operational Teams">
+    <meta name="twitter:description" content="Custom internal software, workflow automation, integrations and operational dashboards.">
+    <meta name="twitter:image" content="https://santipaulin97-sudo.github.io/bynarysolutions/img/bynary.jpeg">
 
     <link rel="icon" href="img/logo.png" type="image/png">
 
@@ -19,6 +36,46 @@
     >
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* V2.1 mobile hardening */
+        @media (max-width: 600px) {
+            .nav-container { gap: 8px; padding: 0 12px; }
+            .nav-right { gap: 6px; min-width: 0; }
+            .logo a { gap: 8px; }
+            .logo img { height: 30px !important; }
+            .logo span { font-size: 1.25rem; }
+            .lang-opt { padding: 5px 8px; font-size: 0.66rem; }
+            .cta-nav {
+                padding: 9px 11px;
+                font-size: 0.69rem;
+                line-height: 1.15;
+                text-align: center;
+                white-space: normal;
+                max-width: 118px;
+            }
+            .container { padding: 0 18px; }
+            .sol-card, .action-card, .price-card, .member-card { padding: 28px 22px; }
+            .member-card { min-width: 0; width: 100%; }
+            .free-card { padding: 34px 20px; }
+            .offer-examples-container-modern { padding: 24px 18px; }
+            .chatbot-container { right: 14px; bottom: 14px; }
+            .chat-window {
+                width: min(380px, calc(100vw - 28px));
+                right: 0;
+                bottom: 78px;
+                height: min(540px, 72vh);
+                max-height: 72vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo span { display: none; }
+            .cta-nav { max-width: 106px; font-size: 0.66rem; padding: 8px 9px; }
+            .hero h1 { font-size: 2.2rem; }
+            .stats-bar { padding: 44px 0; }
+        }
+    </style>
 </head>
 
 <body>
@@ -87,9 +144,9 @@
             <a
                 href="https://calendly.com/santipaulin97/30min"
                 class="cta-nav"
-                data-es="Agendar llamada (15 min)"
-                data-en="Book a 15-Minute Call">
-                Agendar llamada (15 min)
+                data-es="Agendar llamada (30 min)"
+                data-en="Book a 30-Minute Call">
+                Agendar llamada (30 min)
             </a>
 
         </div>
@@ -103,8 +160,8 @@
     <div class="container">
 
         <h1
-            data-es="Software y Automatización para Equipos Operativos"
-            data-en="Custom Software & Automation for Operational Teams">
+            data-es="Software y <span class='highlight'>Automatización</span> para Equipos Operativos"
+            data-en="Custom Software & <span class='highlight'>Automation</span> for Operational Teams">
             Software y <span class="highlight">Automatización</span> para Equipos Operativos
         </h1>
 
@@ -125,9 +182,9 @@
             <a
                 href="https://calendly.com/santipaulin97/30min"
                 class="btn-primary"
-                data-es="Agendar una llamada de 15 minutos"
-                data-en="Book a 15-Minute Call">
-                Agendar una llamada de 15 minutos
+                data-es="Agendar una llamada de 30 minutos"
+                data-en="Book a 30-Minute Call">
+                Agendar una llamada de 30 minutos
             </a>
 
         </div>
@@ -184,11 +241,11 @@
         </div>
 
         <div class="stat-item">
-            <div class="stat-value">85%</div>
+            <div class="stat-value">3</div>
             <div class="stat-label"
-                 data-es="Reducción de Tiempo"
-                 data-en="Time Reduction">
-                Reducción de Tiempo
+                 data-es="Áreas de Solución"
+                 data-en="Solution Areas">
+                Áreas de Solución
             </div>
         </div>
 
@@ -465,7 +522,7 @@
 
             <div class="action-card">
                 <div class="img-wrap">
-                    <img src="img/rrhh-agent.png" alt="Automatización de Procesos Operativos">
+                    <img src="img/operational-automation.svg" alt="Flujo de automatización operativa conectando sistemas, reglas y alertas">
                 </div>
 
                 <h3
@@ -904,6 +961,28 @@
 
 
 <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const langSwitch = document.getElementById('lang-switch');
+        if (!langSwitch) return;
+
+        const titles = {
+            es: 'BYNARY Solutions | Software, Automatización & Datos',
+            en: 'BYNARY Solutions | Software, Automation & Data'
+        };
+
+        langSwitch.addEventListener('click', (event) => {
+            const option = event.target.closest('.lang-opt');
+            if (!option) return;
+
+            const lang = option.getAttribute('data-value');
+            if (!titles[lang]) return;
+
+            document.documentElement.lang = lang;
+            document.title = titles[lang];
+        });
+    });
+</script>
 
 </body>
 </html>
