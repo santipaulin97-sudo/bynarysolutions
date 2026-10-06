@@ -789,3 +789,105 @@ function hideTyping() {
     }
 
 }
+// ==========================================
+// 6. ANIMACIONES REVEAL
+// ==========================================
+
+const observer = new IntersectionObserver(
+    (entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add('active');
+
+            }
+
+        });
+
+    },
+    {
+        threshold: 0.08
+    }
+);
+
+
+// Activar elementos reveal
+document.querySelectorAll('.reveal').forEach(el => {
+
+    observer.observe(el);
+
+});
+
+
+// ==========================================
+// 7. SMOOTH SCROLL
+// ==========================================
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener('click', function (e) {
+
+        const targetId = this.getAttribute('href');
+
+        if (!targetId) return;
+
+        e.preventDefault();
+
+
+        if (targetId === '#') {
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            return;
+
+        }
+
+
+        const target = document.querySelector(targetId);
+
+        if (target) {
+
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+        }
+
+    });
+
+});
+
+
+// ==========================================
+// 8. ACTIVACIÓN INICIAL DE SEGURIDAD
+// ==========================================
+
+// Evita que la web quede invisible si IntersectionObserver tarda
+setTimeout(() => {
+
+    document.querySelectorAll('.reveal').forEach(el => {
+
+        const rect = el.getBoundingClientRect();
+
+        if (rect.top < window.innerHeight) {
+
+            el.classList.add('active');
+
+        }
+
+    });
+
+}, 100);
+
+
+// ==========================================
+// CIERRE DOMContentLoaded
+// ==========================================
+
+});
